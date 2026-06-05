@@ -1,6 +1,6 @@
 import { useContext, useState } from "react"
 import { CartContext } from "../context/CartContext"
-
+import { Link } from "react-router-dom"
 function Rice() {
 
   const {
@@ -21,6 +21,23 @@ const riceProducts = products.filter(
   return (
 
     <div className="min-h-screen bg-[#f7f4ef] px-6 py-20 relative">
+      <div className="max-w-7xl mx-auto mb-10 flex justify-between items-center">
+
+  <Link
+    to="/"
+    className="bg-white px-6 py-3 rounded-2xl shadow-md border border-[#ece3d7] hover:bg-[#181818] hover:text-white transition"
+  >
+    🏠 Home
+  </Link>
+
+  <Link
+    to="/cart"
+    className="bg-[#c08a4b] text-white px-6 py-3 rounded-2xl shadow-md hover:bg-[#181818] transition"
+  >
+    🛒 Go To Cart
+  </Link>
+
+</div>
 
       {/* Popup */}
       {message && (

@@ -9,6 +9,7 @@ import Login from "./pages/Login"
 import Signup from "./pages/Signup"
 import Admin from "./pages/Admin"
 
+
 import { CartContext } from "./context/CartContext"
 
 import ProtectedRoute from "./components/ProtectedRoute"
@@ -17,14 +18,11 @@ import CartSidebar from "./components/CartSidebar"
 function Home() {
 
   const { message, cart } = useContext(CartContext)
+const user = JSON.parse(
+  localStorage.getItem("grainhub-user")
+)
 
-  const isLoggedIn =
-    localStorage.getItem("grainhub-auth")
-
-  const user = JSON.parse(
-    localStorage.getItem("grainhub-user")
-  )
-
+const isLoggedIn = !!user
   const [showMenu, setShowMenu] = useState(false)
 
   const [cartOpen, setCartOpen] = useState(false)
@@ -66,20 +64,18 @@ function Home() {
             Home
           </Link>
 
-          <Link
-            to="/"
-            className="hover:text-[#c08a4b] transition"
-          >
-            Products
-          </Link>
-
-          <Link
-            to="/"
-            className="hover:text-[#c08a4b] transition"
-          >
-            Contact
-          </Link>
-
+        <a
+  href="#products"
+  className="hover:text-[#c08a4b] transition"
+>
+  Products
+</a>
+<a
+  href="#contact"
+  className="hover:text-[#c08a4b] transition"
+>
+  Contact
+</a>
           {/* Cart Button */}
           <button
             onClick={() => setCartOpen(true)}
@@ -120,9 +116,8 @@ function Home() {
                     onClick={() => {
 
                       localStorage.removeItem(
-                        "grainhub-auth"
-                      )
-
+  "grainhub-user"
+)
                       window.location.reload()
 
                     }}
@@ -155,7 +150,10 @@ function Home() {
       </nav>
 
       {/* Hero */}
-      <section className="max-w-7xl mx-auto px-6 py-24">
+      <section
+  id="products"
+  className="max-w-7xl mx-auto px-6 py-24"
+>
 
         <div className="mb-16">
 
@@ -260,6 +258,124 @@ function Home() {
             </div>
 
           </Link>
+          
+
+        </div>
+              </section>
+
+              <section className="max-w-7xl mx-auto px-6 py-20">
+
+  <div className="bg-white rounded-[30px] p-10 border border-[#ece3d7] shadow-lg">
+
+    <h2 className="text-4xl font-bold mb-6">
+
+      Visit Our
+
+      <span className="italic text-[#c08a4b]">
+        {" "}Store
+      </span>
+
+    </h2>
+
+    <div className="grid md:grid-cols-2 gap-10 items-center">
+
+      <div>
+
+        <h3 className="text-3xl font-bold mb-4">
+          SREE LAKSHMI RICE STORE
+        </h3>
+        <p className="inline-block bg-[#c08a4b] text-white px-4 py-2 rounded-xl font-semibold mb-4">
+
+  ⭐ 22+ Years of Trusted Service
+
+</p>
+
+        <p className="text-lg mb-6 text-gray-600">
+
+          Serving customers in Hyderabad with premium quality rice, cereals, pulses and wholesale grain supplies. Trusted by local families and businesses for quality products and competitive pricing.
+
+        </p>
+
+        <div className="space-y-3 text-lg">
+
+          <p>📍 Rajamohallah, King Koti, Koti, Hyderabad, Telangana 500001</p>
+
+          <p>📞 +91 9246292724</p>
+
+          <p>🚚 Retail & Wholesale Orders Available</p>
+
+          <p>🕒 Mon - Sat : 10 AM - 9 PM & sun :10 AM - 2 PM</p>
+
+        </div>
+
+        <div className="flex gap-4 mt-8">
+
+          <a
+            href="https://wa.me/918074572067"
+            target="_blank"
+            rel="noreferrer"
+            className="bg-[#25D366] text-white px-6 py-3 rounded-2xl hover:opacity-90 transition"
+          >
+            💬 WhatsApp
+          </a>
+
+          <a
+            href="https://maps.app.goo.gl/Er65hF9g2F8r5Lre6"
+            target="_blank"
+            rel="noreferrer"
+            className="bg-[#181818] text-white px-6 py-3 rounded-2xl hover:bg-[#c08a4b] transition"
+          >
+            📍 View Location
+          </a>
+
+        </div>
+
+      </div>
+
+      <div>
+
+        <img
+          src="https://images.unsplash.com/photo-1586201375761-83865001e31c"
+          alt="Sree Lakshmi Rice Store"
+          className="rounded-[30px] w-full h-[350px] object-cover"
+        />
+
+      </div>
+
+    </div>
+
+  </div>
+
+</section>
+
+      <section
+        id="contact"
+        className="max-w-7xl mx-auto px-6 py-20"
+      >
+
+        <div className="bg-white rounded-[30px] p-10 border border-[#ece3d7] shadow-lg">
+
+          <h2 className="text-4xl font-bold mb-6">
+
+            Contact
+
+            <span className="italic text-[#c08a4b]">
+              {" "}Us
+            </span>
+
+          </h2>
+
+          <div className="space-y-4 text-lg">
+
+            <p>📍 Hyderabad, Telangana</p>
+
+            <p>📞 +91 8074572067</p>
+
+            <p>📧 grainhub@gmail.com</p>
+
+            <p>🕒 Mon - Sat : 9 AM - 8 PM</p>
+
+          </div>
 
         </div>
 
@@ -274,46 +390,68 @@ function App() {
 
   return (
 
-    <Routes>
+    <>
 
-      <Route path="/" element={<Home />} />
+    {window.location.pathname !== "/" && (
 
-      <Route path="/rice" element={<Rice />} />
+  <nav className="bg-white border-b border-[#ece3d7] px-8 py-4 flex justify-center gap-8 sticky top-0 z-50 shadow-sm">
 
-      <Route path="/cereals" element={<Cereals />} />
+    <Link to="/">Home</Link>
 
-      <Route path="/pulses" element={<Pulses />} />
-     <Route
-  path="/admin"
-  element={
-    <ProtectedRoute adminOnly={true}>
-      <Admin />
-    </ProtectedRoute>
-  }
-/>
+    <Link to="/rice">Rice</Link>
 
-      <Route
-        path="/cart"
-        element={
-          <ProtectedRoute>
-            <Cart />
-          </ProtectedRoute>
-        }
-      />
+    <Link to="/cereals">Cereals</Link>
 
-      <Route
-        path="/login"
-        element={<Login />}
-      />
+    <Link to="/pulses">Pulses</Link>
 
-      <Route
-        path="/signup"
-        element={<Signup />}
-      />
+    <Link to="/cart">Cart</Link>
 
-    </Routes>
+  </nav>
+
+)}
+
+      <Routes>
+
+        <Route path="/" element={<Home />} />
+
+        <Route path="/rice" element={<Rice />} />
+
+        <Route path="/cereals" element={<Cereals />} />
+
+        <Route path="/pulses" element={<Pulses />} />
+
+        <Route
+          path="/admin"
+          element={
+            <ProtectedRoute adminOnly={true}>
+              <Admin />
+            </ProtectedRoute>
+          }
+        />
+
+        <Route
+          path="/cart"
+          element={
+            <ProtectedRoute>
+              <Cart />
+            </ProtectedRoute>
+          }
+        />
+
+        <Route
+          path="/login"
+          element={<Login />}
+        />
+
+        <Route
+          path="/signup"
+          element={<Signup />}
+        />
+
+      </Routes>
+
+    </>
 
   )
 }
-
 export default App

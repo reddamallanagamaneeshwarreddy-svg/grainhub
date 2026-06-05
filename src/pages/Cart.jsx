@@ -1,5 +1,6 @@
 import { useContext } from "react"
 import { CartContext } from "../context/CartContext"
+import { Link } from "react-router-dom"
 
 function Cart() {
 
@@ -19,6 +20,18 @@ function Cart() {
   return (
 
     <div className="min-h-screen bg-[#f7f4ef] px-6 py-20">
+      <div className="mb-8">
+
+  <Link
+    to="/"
+    className="bg-white px-6 py-3 rounded-2xl shadow-md border border-[#ece3d7] hover:bg-[#181818] hover:text-white transition"
+  >
+
+    🏠 Home
+
+  </Link>
+
+</div>
 
       <div className="max-w-6xl mx-auto">
 

@@ -1,6 +1,6 @@
 import { useContext, useState } from "react"
 import { CartContext } from "../context/CartContext"
-
+import { Link } from "react-router-dom"
 function Pulses() {
 
   const {
@@ -8,8 +8,8 @@ function Pulses() {
     message
   } = useContext(CartContext)
 
-  const [quantity, setQuantity] = useState(1)
-  
+  const [quantities, setQuantities] = useState({})
+
   const products = JSON.parse(
   localStorage.getItem("grainhub-products")
 ) || []
@@ -22,6 +22,23 @@ const pulsesProducts = products.filter(
   return (
 
     <div className="min-h-screen bg-[#f7f4ef] px-6 py-20 relative">
+      <div className="max-w-7xl mx-auto mb-10 flex justify-between items-center">
+
+  <Link
+    to="/"
+    className="bg-white px-6 py-3 rounded-2xl shadow-md border border-[#ece3d7] hover:bg-[#181818] hover:text-white transition"
+  >
+    🏠 Home
+  </Link>
+
+  <Link
+    to="/cart"
+    className="bg-[#c08a4b] text-white px-6 py-3 rounded-2xl shadow-md hover:bg-[#181818] transition"
+  >
+    🛒 Go To Cart
+  </Link>
+
+</div>
 
       {/* Popup */}
       {message && (
@@ -83,23 +100,36 @@ const pulsesProducts = products.filter(
     <div className="flex items-center gap-4 mb-6">
 
       <button
-        onClick={() =>
-          quantity > 1 &&
-          setQuantity(quantity - 1)
-        }
+     onClick={() =>
+
+  setQuantities({
+    ...quantities,
+    [product.id]:
+      (quantities[product.id] || 1) > 1
+        ? (quantities[product.id] || 1) - 1
+        : 1
+  })
+
+}
         className="bg-[#f3e7d7] px-4 py-2 rounded-xl text-xl font-bold"
       >
         -
       </button>
 
       <p className="text-xl font-bold">
-        {quantity}
+        {quantities[product.id] || 1}
       </p>
 
       <button
-        onClick={() =>
-          setQuantity(quantity + 1)
-        }
+       onClick={() =>
+
+  setQuantities({
+    ...quantities,
+    [product.id]:
+      (quantities[product.id] || 1) + 1
+  })
+
+}
         className="bg-[#f3e7d7] px-4 py-2 rounded-xl text-xl font-bold"
       >
         +
@@ -116,11 +146,11 @@ const pulsesProducts = products.filter(
       <button
         onClick={() => {
 
-          for (
-            let i = 0;
-            i < quantity;
-            i++
-          ) {
+        for (
+  let i = 0;
+  i < (quantities[product.id] || 1);
+  i++
+){
 
             addToCart({
               name: product.name,

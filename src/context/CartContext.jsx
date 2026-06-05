@@ -9,42 +9,42 @@ function CartProvider({ children }) {
 
   const addToCart = (product) => {
 
-    const existing = cart.find(
+  setCart((prevCart) => {
+
+    const existing = prevCart.find(
       (item) => item.name === product.name
     )
 
     if (existing) {
 
-      setCart(
-        cart.map((item) =>
-          item.name === product.name
-            ? {
-                ...item,
-                quantity: item.quantity + 1
-              }
-            : item
-        )
+      return prevCart.map((item) =>
+        item.name === product.name
+          ? {
+              ...item,
+              quantity: item.quantity + 1
+            }
+          : item
       )
-
-    } else {
-
-      setCart([
-        ...cart,
-        {
-          ...product,
-          quantity: 1
-        }
-      ])
 
     }
 
-    setMessage(`${product.name} added to cart`)
+    return [
+      ...prevCart,
+      {
+        ...product,
+        quantity: 1
+      }
+    ]
 
-    setTimeout(() => {
-      setMessage("")
-    }, 2000)
+  })
 
-  }
+  setMessage(`${product.name} added to cart`)
+
+  setTimeout(() => {
+    setMessage("")
+  }, 2000)
+
+}
 
   const decreaseQuantity = (name) => {
 
