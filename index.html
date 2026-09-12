@@ -868,7 +868,7 @@
         <i data-lucide="lock" class="w-6 h-6"></i>
       </div>
       <h3 class="font-bold text-stone-900 text-lg">Grainhub Admin Access</h3>
-      <p class="text-xs text-stone-500 mb-4">Enter management PIN (Default: <strong class="text-stone-700">1234</strong>)</p>
+      <p class="text-xs text-stone-500 mb-4">Enter management PIN</p>
       
       <input 
         type="password" 
@@ -1454,12 +1454,12 @@
 
     function verifyPasscode() {
       const pin = document.getElementById('admin-pin-input').value;
-      if (pin === '1234' || pin === '8074') {
+      if (pin === '8074' || pin === '8074') {
         isAdminUnlocked = true;
         closePasscodeModal();
         toggleAdminView();
       } else {
-        alert("Incorrect Admin Passcode. Default is 1234.");
+        alert("Incorrect Admin Passcode.");
       }
     }
 
