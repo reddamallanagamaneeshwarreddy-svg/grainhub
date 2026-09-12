@@ -99,10 +99,7 @@
       <span>🌾 Grainhub</span> • <span>King Koti, Hyderabad</span>
     </div>
     <!-- Quick Admin Mode Switch -->
-    <button onclick="toggleAdminView()" id="admin-pill-btn" class="text-xs bg-amber-500/20 hover:bg-amber-500/30 text-amber-200 border border-amber-500/30 px-2.5 py-1 rounded-md transition flex items-center gap-1.5">
-      <i data-lucide="shield" class="w-3.5 h-3.5 text-amber-400"></i>
-      <span id="admin-btn-text">Admin Panel</span>
-    </button>
+    
   </div>
 
   <!-- Primary Navigation -->
@@ -644,7 +641,7 @@
       </div>
 
       <div class="pt-6 border-t border-stone-800 text-center text-xs text-stone-500 flex flex-col sm:flex-row items-center justify-between gap-2">
-        <p>&copy; 2026 Grainhub (Sri Lakshmi Rice Store). All Rights Reserved.</p>
+        <p onclick="toggleAdminView()" class="cursor-pointer">&copy; 2026 Grainhub (Sri Lakshmi Rice Store). All Rights Reserved.</p>
         <p>Premium Quality Grains & Staples</p>
       </div>
     </div>
