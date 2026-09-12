@@ -1,0 +1,1836 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Grainhub | Premium Rice & Staples Depot | Hyderabad</title>
+  
+  <!-- Tailwind CSS CDN -->
+  <script src="https://cdn.tailwindcss.com"></script>
+  
+  <!-- Lucide Icons -->
+  <script src="https://unpkg.com/lucide@latest"></script>
+  
+  <!-- Google Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&family=Playfair+Display:ital,wght@0,600;0,700;1,600&display=swap" rel="stylesheet">
+
+  <script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          colors: {
+            brand: {
+              50: '#fdf8ee',
+              100: '#faefd6',
+              200: '#f4dcab',
+              300: '#ecc275',
+              400: '#e3a241',
+              500: '#d7841e',
+              600: '#bb6515',
+              700: '#944914',
+              800: '#793917',
+              900: '#642f17',
+              950: '#3a1709',
+            }
+          },
+          fontFamily: {
+            sans: ['"Plus Jakarta Sans"', 'sans-serif'],
+            serif: ['"Playfair Display"', 'serif'],
+          }
+        }
+      }
+    }
+  </script>
+
+  <style>
+    .no-scrollbar::-webkit-scrollbar { display: none; }
+    .no-scrollbar { -ms-overflow-style: none; scrollbar-width: none; }
+    @media print {
+      body * { visibility: hidden; }
+      #invoice-modal, #invoice-modal * { visibility: visible; }
+      #invoice-modal { position: absolute; left: 0; top: 0; width: 100%; }
+      .no-print { display: none !important; }
+    }
+  </style>
+
+  <!-- Firebase SDKs -->
+  <script type="module">
+    import { initializeApp } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-app.js";
+    import { 
+      getFirestore, collection, doc, setDoc, getDocs, onSnapshot, 
+      query, updateDoc, deleteDoc, serverTimestamp 
+    } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-firestore.js";
+    import { getAuth, signInAnonymously } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-auth.js";
+
+    const firebaseConfig = typeof __FIREBASE_CONFIG__ !== 'undefined' 
+      ? JSON.parse(__FIREBASE_CONFIG__) 
+      : {
+          apiKey: "AIzaSyDummyKeyForFallbackOperations9837",
+          authDomain: "grainhub-rice-store.firebaseapp.com",
+          projectId: "grainhub-rice-store",
+          storageBucket: "grainhub-rice-store.appspot.com",
+          messagingSenderId: "109823746",
+          appId: "1:109823746:web:8df87a6d8f6b54"
+        };
+
+    const app = initializeApp(firebaseConfig);
+    const db = getFirestore(app);
+    const auth = getAuth(app);
+
+    window.fb = { db, collection, doc, setDoc, getDocs, onSnapshot, query, updateDoc, deleteDoc, serverTimestamp, auth, signInAnonymously };
+  </script>
+</head>
+<body class="bg-[#FBF9F4] text-stone-800 font-sans antialiased min-h-screen flex flex-col selection:bg-brand-500 selection:text-white">
+
+  <!-- Top Announcement Bar -->
+  <div class="bg-brand-950 text-amber-100 text-xs sm:text-sm py-2 px-4 text-center font-medium border-b border-amber-900/40 relative z-30 flex items-center justify-between">
+    <div class="hidden sm:flex items-center gap-2 mx-auto">
+      <span class="inline-flex items-center gap-1.5 bg-emerald-500/20 text-emerald-300 px-2.5 py-0.5 rounded-full text-xs font-semibold border border-emerald-500/30">
+        <span class="w-1.5 h-1.5 rounded-full bg-emerald-400 animate-pulse"></span> Free Door Delivery in King Koti & 5km on Orders Over ₹2,000
+      </span>
+      <span class="text-amber-300/60">|</span>
+      <span>UPI: <strong class="text-white font-mono font-bold">8074572067@ptsbi</strong></span>
+      <span class="text-amber-300/60">|</span>
+      <span>WhatsApp Order: <strong class="text-white font-bold">+91 80745 72067</strong></span>
+    </div>
+    <div class="sm:hidden mx-auto font-medium text-[11px] flex items-center gap-1">
+      <span>🌾 Grainhub</span> • <span>King Koti, Hyderabad</span>
+    </div>
+    <!-- Quick Admin Mode Switch -->
+    <button onclick="toggleAdminView()" id="admin-pill-btn" class="text-xs bg-amber-500/20 hover:bg-amber-500/30 text-amber-200 border border-amber-500/30 px-2.5 py-1 rounded-md transition flex items-center gap-1.5">
+      <i data-lucide="shield" class="w-3.5 h-3.5 text-amber-400"></i>
+      <span id="admin-btn-text">Admin Panel</span>
+    </button>
+  </div>
+
+  <!-- Primary Navigation -->
+  <header class="sticky top-0 z-40 bg-white/95 backdrop-blur-md border-b border-stone-200 shadow-sm transition-all">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 h-20 flex items-center justify-between gap-4">
+      
+      <!-- Brand Logo -->
+      <a href="#" class="flex items-center gap-3 group">
+        <div class="w-12 h-12 rounded-xl bg-gradient-to-br from-brand-600 to-amber-700 flex items-center justify-center text-white shadow-md shadow-brand-600/20 group-hover:scale-105 transition">
+          <i data-lucide="wheat" class="w-7 h-7 text-amber-200"></i>
+        </div>
+        <div>
+          <div class="flex items-center gap-2">
+            <h1 class="text-2xl sm:text-3xl font-serif font-black text-stone-900 tracking-tight leading-none">
+              Grain<span class="text-brand-600">hub</span>
+            </h1>
+            <span class="hidden md:inline-block text-[10px] font-semibold bg-brand-100 text-brand-800 px-2 py-0.5 rounded border border-brand-300">ESTD. 2003</span>
+          </div>
+          <p class="text-[11px] text-stone-500 flex items-center gap-1 mt-0.5">
+            <i data-lucide="map-pin" class="w-3 h-3 text-brand-600"></i> Sri Lakshmi Rice Store • King Koti, Hyd
+          </p>
+        </div>
+      </a>
+
+      <!-- Desktop Search Bar -->
+      <div class="hidden md:flex flex-1 max-w-md mx-4">
+        <div class="relative w-full">
+          <i data-lucide="search" class="w-4 h-4 text-stone-400 absolute left-3.5 top-1/2 -translate-y-1/2"></i>
+          <input 
+            type="text" 
+            id="search-input"
+            oninput="handleSearch(this.value)"
+            placeholder="Search Sona Masoori, 1121 Basmati, HMT, Toor Dal..."
+            class="w-full pl-10 pr-4 py-2.5 bg-stone-50 border border-stone-200 rounded-xl text-sm focus:outline-none focus:ring-2 focus:ring-brand-500 focus:bg-white transition"
+          >
+        </div>
+      </div>
+
+      <!-- Quick Action Buttons & Cart -->
+      <div class="flex items-center gap-3">
+        <!-- Direct Google Maps Direction Link -->
+        <a 
+          href="https://maps.app.goo.gl/bRnsqF8HchEUjFP58" 
+          target="_blank" 
+          rel="noopener noreferrer"
+          class="hidden sm:inline-flex items-center gap-1.5 text-xs font-semibold text-stone-700 bg-stone-100 hover:bg-stone-200 px-3 py-2 rounded-xl border border-stone-200 transition"
+          title="Open in Google Maps"
+        >
+          <i data-lucide="navigation" class="w-3.5 h-3.5 text-brand-600"></i>
+          <span>Shop Location</span>
+        </a>
+
+        <!-- Call Store Hotline -->
+        <a 
+          href="tel:09246292724" 
+          class="hidden sm:inline-flex items-center gap-1.5 text-xs font-semibold text-stone-700 bg-stone-100 hover:bg-stone-200 px-3 py-2 rounded-xl border border-stone-200 transition"
+          title="Call Shop: 092462 92724"
+        >
+          <i data-lucide="phone-call" class="w-3.5 h-3.5 text-emerald-600"></i>
+          <span>092462 92724</span>
+        </a>
+
+        <!-- Cart Trigger -->
+        <button 
+          onclick="toggleCartDrawer(true)"
+          class="relative flex items-center gap-2 bg-brand-600 hover:bg-brand-700 text-white px-4 py-2.5 rounded-xl font-semibold text-sm shadow-md shadow-brand-600/25 transition active:scale-95"
+        >
+          <i data-lucide="shopping-bag" class="w-4 h-4"></i>
+          <span class="hidden sm:inline">Cart</span>
+          <span id="cart-badge-count" class="bg-amber-400 text-stone-900 text-xs font-black px-2 py-0.5 rounded-full min-w-[20px] text-center leading-tight">0</span>
+        </button>
+      </div>
+
+    </div>
+  </header>
+
+  <!-- Mobile Search Bar -->
+  <div class="md:hidden bg-stone-100 px-4 py-2.5 border-b border-stone-200">
+    <div class="relative w-full">
+      <i data-lucide="search" class="w-4 h-4 text-stone-400 absolute left-3.5 top-1/2 -translate-y-1/2"></i>
+      <input 
+        type="text" 
+        oninput="handleSearch(this.value)"
+        placeholder="Search rice varieties, dals, atta..."
+        class="w-full pl-10 pr-4 py-2 bg-white border border-stone-300 rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-brand-500"
+      >
+    </div>
+  </div>
+
+  <!-- MAIN CUSTOMER STOREFRONT VIEW -->
+  <main id="storefront-view" class="flex-grow">
+    
+    <!-- Hero Banner Section -->
+    <section class="relative bg-gradient-to-b from-amber-50 via-stone-50 to-[#FBF9F4] border-b border-stone-200/80 overflow-hidden">
+      <div class="absolute inset-0 opacity-10 bg-[radial-gradient(#d7841e_1px,transparent_1px)] [background-size:16px_16px] pointer-events-none"></div>
+      <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-10 sm:py-16 relative">
+        <div class="grid grid-cols-1 lg:grid-cols-12 gap-8 lg:gap-12 items-center">
+          
+          <div class="lg:col-span-7 space-y-6">
+            <div class="inline-flex items-center gap-2 bg-brand-100/90 text-brand-900 px-3 py-1 rounded-full text-xs font-bold border border-brand-200 tracking-wide uppercase">
+              <i data-lucide="shield-check" class="w-3.5 h-3.5 text-brand-600"></i> Pure Quality • 100% Unadulterated Grains
+            </div>
+            
+            <h2 class="text-3xl sm:text-5xl font-serif font-black text-stone-900 tracking-tight leading-tight sm:leading-[1.15]">
+              Fresh Grain Depot Delivery Across <span class="text-transparent bg-clip-text bg-gradient-to-r from-brand-600 to-amber-700">Hyderabad via Grainhub.</span>
+            </h2>
+            
+            <p class="text-stone-600 text-sm sm:text-base leading-relaxed max-w-2xl font-normal">
+              Direct depot rates for Kurnool Sona Masoori (BPT 5204), Miryalaguda HMT, Aged XXL 1121 Biryani Basmati, and native dals. Fulfilled directly from Sri Lakshmi Rice Store in King Koti.
+            </p>
+
+            <div class="flex flex-wrap items-center gap-3 pt-2">
+              <a href="#catalog-section" class="bg-brand-600 hover:bg-brand-700 text-white px-6 py-3 rounded-xl font-bold text-sm sm:text-base shadow-lg shadow-brand-600/30 transition flex items-center gap-2 group">
+                <span>Browse Bag Rates</span>
+                <i data-lucide="arrow-right" class="w-4 h-4 group-hover:translate-x-1 transition"></i>
+              </a>
+              <a 
+                href="https://wa.me/918074572067?text=Hi%20Grainhub%2C%20I%20need%20bulk%20catering%20rates%20for%20rice%20bags." 
+                target="_blank"
+                class="bg-white hover:bg-stone-100 text-stone-800 border border-stone-300 px-5 py-3 rounded-xl font-bold text-sm sm:text-base transition flex items-center gap-2"
+              >
+                <i data-lucide="message-square" class="w-4 h-4 text-emerald-600"></i>
+                <span>Bulk / Catering Quote</span>
+              </a>
+            </div>
+
+            <!-- Trust Badges -->
+            <div class="grid grid-cols-3 gap-4 pt-4 border-t border-stone-200">
+              <div class="flex items-center gap-2.5">
+                <div class="w-9 h-9 rounded-lg bg-brand-100 text-brand-700 flex items-center justify-center shrink-0">
+                  <i data-lucide="clock" class="w-5 h-5"></i>
+                </div>
+                <div>
+                  <h4 class="text-xs font-bold text-stone-900">12+ Months Aged</h4>
+                  <p class="text-[11px] text-stone-500">Non-sticky grains</p>
+                </div>
+              </div>
+              <div class="flex items-center gap-2.5">
+                <div class="w-9 h-9 rounded-lg bg-emerald-100 text-emerald-700 flex items-center justify-center shrink-0">
+                  <i data-lucide="truck" class="w-5 h-5"></i>
+                </div>
+                <div>
+                  <h4 class="text-xs font-bold text-stone-900">Doorstep Tempo</h4>
+                  <p class="text-[11px] text-stone-500">King Koti & 5km Radius</p>
+                </div>
+              </div>
+              <div class="flex items-center gap-2.5">
+                <div class="w-9 h-9 rounded-lg bg-amber-100 text-amber-700 flex items-center justify-center shrink-0">
+                  <i data-lucide="qr-code" class="w-5 h-5"></i>
+                </div>
+                <div>
+                  <h4 class="text-xs font-bold text-stone-900">Instant UPI</h4>
+                  <p class="text-[11px] text-stone-500">8074572067@ptsbi</p>
+                </div>
+              </div>
+            </div>
+
+          </div>
+
+          <!-- Hero Location Card & Store Status -->
+          <div class="lg:col-span-5">
+            <div class="bg-white rounded-2xl p-6 shadow-xl shadow-stone-200/60 border border-stone-200 relative overflow-hidden">
+              <div class="flex items-center justify-between border-b border-stone-100 pb-4 mb-4">
+                <div>
+                  <span class="inline-block text-[11px] font-bold text-brand-700 tracking-wider uppercase">Fulfillment Depot</span>
+                  <h3 class="text-lg font-bold text-stone-900">Sri Lakshmi Rice Store</h3>
+                </div>
+                <div class="flex items-center gap-1.5 bg-emerald-100 text-emerald-800 text-xs px-2.5 py-1 rounded-full font-bold">
+                  <span class="w-2 h-2 rounded-full bg-emerald-500 animate-ping"></span> Dispatch Open
+                </div>
+              </div>
+
+              <!-- Quick Info List -->
+              <div class="space-y-3 text-sm text-stone-600 mb-6">
+                <div class="flex items-start gap-3">
+                  <i data-lucide="map-pin" class="w-4 h-4 text-brand-600 shrink-0 mt-0.5"></i>
+                  <span>Rajamohallah, King Koti, Koti, Hyderabad, Telangana 500001</span>
+                </div>
+                <div class="flex items-center gap-3">
+                  <i data-lucide="phone" class="w-4 h-4 text-brand-600 shrink-0"></i>
+                  <span>Hotline: <strong>092462 92724</strong></span>
+                </div>
+                <div class="flex items-center gap-3">
+                  <i data-lucide="message-circle" class="w-4 h-4 text-emerald-600 shrink-0"></i>
+                  <span>WhatsApp Orders: <strong>+91 80745 72067</strong></span>
+                </div>
+                <div class="flex items-center gap-3">
+                  <i data-lucide="smartphone" class="w-4 h-4 text-indigo-600 shrink-0"></i>
+                  <span>Official UPI: <strong class="font-mono text-stone-900">8074572067@ptsbi</strong></span>
+                </div>
+                <div class="flex items-start gap-3">
+                  <i data-lucide="clock" class="w-4 h-4 text-brand-600 shrink-0 mt-0.5"></i>
+                  <div>
+                    <p class="font-medium text-stone-800">Mon – Sat: 10:00 AM – 9:30 PM</p>
+                    <p class="text-xs text-stone-500">Sunday: 9:00 AM – 2:00 PM</p>
+                  </div>
+                </div>
+              </div>
+
+              <!-- Maps Integration Buttons -->
+              <div class="grid grid-cols-2 gap-3">
+                <a 
+                  href="https://maps.app.goo.gl/bRnsqF8HchEUjFP58" 
+                  target="_blank" 
+                  rel="noopener noreferrer"
+                  class="bg-brand-600 hover:bg-brand-700 text-white font-semibold text-xs py-3 px-3 rounded-xl text-center flex items-center justify-center gap-1.5 transition shadow-sm"
+                >
+                  <i data-lucide="external-link" class="w-3.5 h-3.5"></i>
+                  <span>Google Maps</span>
+                </a>
+                <a 
+                  href="https://wa.me/918074572067?text=Hi%20Grainhub%2C%20please%20share%20todays%20rice%20price%20list."
+                  target="_blank"
+                  class="bg-emerald-600 hover:bg-emerald-700 text-white font-semibold text-xs py-3 px-3 rounded-xl text-center flex items-center justify-center gap-1.5 transition shadow-sm"
+                >
+                  <i data-lucide="send" class="w-3.5 h-3.5"></i>
+                  <span>WhatsApp Msg</span>
+                </a>
+              </div>
+            </div>
+          </div>
+
+        </div>
+      </div>
+    </section>
+
+    <!-- Bulk & Catering Volume Calculator -->
+    <section class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 -mt-6 sm:-mt-8 mb-12 relative z-20">
+      <div class="bg-gradient-to-r from-stone-900 to-stone-850 text-white rounded-2xl p-6 sm:p-8 shadow-2xl border border-stone-800">
+        <div class="grid grid-cols-1 lg:grid-cols-12 gap-6 items-center">
+          
+          <div class="lg:col-span-5 space-y-1">
+            <div class="flex items-center gap-2 text-brand-400 text-xs font-bold uppercase tracking-wider">
+              <i data-lucide="calculator" class="w-4 h-4"></i> Wholesale Estimator
+            </div>
+            <h3 class="text-xl sm:text-2xl font-bold font-serif text-amber-100">Live Bag Volume & Catering Estimator</h3>
+            <p class="text-stone-400 text-xs sm:text-sm">
+              Automated quantity discounts for hostel messes, function halls, and families.
+            </p>
+          </div>
+
+          <div class="lg:col-span-7 grid grid-cols-1 sm:grid-cols-3 gap-4">
+            <div>
+              <label class="block text-xs font-semibold text-stone-300 mb-1.5">Select Variety</label>
+              <select id="calc-variety-select" onchange="runCalculator()" class="w-full bg-stone-800 border border-stone-700 text-white text-xs sm:text-sm rounded-xl px-3 py-2.5 focus:outline-none focus:ring-2 focus:ring-brand-500">
+              </select>
+            </div>
+
+            <div>
+              <label class="block text-xs font-semibold text-stone-300 mb-1.5">Quantity (Bulk Bags)</label>
+              <div class="flex items-center">
+                <button onclick="stepCalculatorQty(-1)" class="bg-stone-800 hover:bg-stone-700 text-white px-3 py-2.5 rounded-l-xl border-y border-l border-stone-700">-</button>
+                <input type="number" id="calc-bags" min="1" max="100" value="5" oninput="runCalculator()" class="w-full text-center bg-stone-850 border border-stone-700 text-amber-300 font-bold text-sm py-2.5 focus:outline-none">
+                <button onclick="stepCalculatorQty(1)" class="bg-stone-800 hover:bg-stone-700 text-white px-3 py-2.5 rounded-r-xl border-y border-r border-stone-700">+</button>
+              </div>
+            </div>
+
+            <div class="bg-stone-800/80 rounded-xl p-3 border border-stone-700/80 flex flex-col justify-between">
+              <div class="flex justify-between items-center text-[11px] text-stone-400">
+                <span>Estimated Total:</span>
+                <span id="calc-discount-label" class="text-emerald-400 font-bold">5% Bulk Off</span>
+              </div>
+              <div class="text-xl font-bold text-amber-300" id="calc-total-price">₹0</div>
+              <button onclick="addCalculatedToCart()" class="w-full mt-1.5 bg-brand-600 hover:bg-brand-500 text-white text-[11px] font-bold py-1.5 rounded-lg transition flex items-center justify-center gap-1">
+                <i data-lucide="plus" class="w-3 h-3"></i> Add to Cart
+              </button>
+            </div>
+
+          </div>
+
+        </div>
+      </div>
+    </section>
+
+    <!-- Product Catalog Section -->
+    <section id="catalog-section" class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
+      
+      <div class="flex flex-col md:flex-row md:items-end justify-between gap-4 mb-8">
+        <div>
+          <span class="text-xs font-extrabold tracking-wider text-brand-600 uppercase">Direct Rice Depo Rates</span>
+          <h2 class="text-2xl sm:text-3xl font-serif font-black text-stone-900 mt-1">Grainhub Catalog & Daily Rates</h2>
+          <p class="text-stone-500 text-sm mt-1">Select pack size for instant wholesale/retail price quote.</p>
+        </div>
+
+        <div class="flex items-center gap-2 overflow-x-auto pb-2 no-scrollbar" id="category-pills">
+          <button onclick="filterCategory('all')" class="cat-pill active px-4 py-2 rounded-xl text-xs font-bold transition whitespace-nowrap bg-stone-900 text-white">All Products</button>
+          <button onclick="filterCategory('sona-masoori')" class="cat-pill px-4 py-2 rounded-xl text-xs font-bold transition whitespace-nowrap bg-white text-stone-700 border border-stone-200 hover:bg-stone-50">Sona Masoori</button>
+          <button onclick="filterCategory('basmati')" class="cat-pill px-4 py-2 rounded-xl text-xs font-bold transition whitespace-nowrap bg-white text-stone-700 border border-stone-200 hover:bg-stone-50">Biryani Basmati</button>
+          <button onclick="filterCategory('hmt-special')" class="cat-pill px-4 py-2 rounded-xl text-xs font-bold transition whitespace-nowrap bg-white text-stone-700 border border-stone-200 hover:bg-stone-50">HMT & Kolam</button>
+          <button onclick="filterCategory('dals-pulses')" class="cat-pill px-4 py-2 rounded-xl text-xs font-bold transition whitespace-nowrap bg-white text-stone-700 border border-stone-200 hover:bg-stone-50">Dals & Staples</button>
+        </div>
+      </div>
+
+      <!-- Products Grid -->
+      <div id="products-grid" class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6"></div>
+
+      <!-- Empty State -->
+      <div id="no-products-view" class="hidden text-center py-16 bg-white rounded-2xl border border-stone-200 p-8 my-6">
+        <i data-lucide="package-x" class="w-12 h-12 text-stone-400 mx-auto mb-3"></i>
+        <h4 class="text-lg font-bold text-stone-800">No matching varieties found</h4>
+        <p class="text-stone-500 text-sm mt-1">Try adjusting your search query or category filter.</p>
+        <button onclick="resetFilters()" class="mt-4 px-4 py-2 bg-brand-600 text-white rounded-xl text-xs font-semibold">Reset Search</button>
+      </div>
+
+    </section>
+
+    <!-- Wholesale & Function Hall Banner -->
+    <section class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-10">
+      <div class="bg-brand-950 text-white rounded-3xl p-8 sm:p-12 relative overflow-hidden shadow-xl">
+        <div class="absolute right-0 bottom-0 w-96 h-96 bg-brand-500/10 rounded-full blur-3xl pointer-events-none"></div>
+        <div class="grid grid-cols-1 lg:grid-cols-12 gap-8 items-center relative z-10">
+          <div class="lg:col-span-8 space-y-4">
+            <span class="inline-block bg-brand-500/20 text-brand-300 px-3 py-1 rounded-full text-xs font-bold tracking-wider uppercase border border-brand-500/30">Institution & Function Hall Supply</span>
+            <h3 class="text-2xl sm:text-4xl font-serif font-bold text-amber-100 leading-tight">
+              Supplying Grains for Marriages, Function Halls & Hostels in Hyderabad
+            </h3>
+            <p class="text-stone-300 text-sm sm:text-base leading-relaxed max-w-2xl">
+              Get direct mill prices for deliveries exceeding 20+ bags. Guaranteed uniform aging, exceptional cooking expansion, and tempo dispatch right to your venue.
+            </p>
+            <div class="flex flex-wrap gap-4 pt-2">
+              <a href="tel:09246292724" class="bg-amber-400 hover:bg-amber-300 text-stone-900 font-bold px-5 py-3 rounded-xl text-sm flex items-center gap-2 transition">
+                <i data-lucide="phone-call" class="w-4 h-4"></i> Call for Mill Rates (092462 92724)
+              </a>
+              <a href="https://wa.me/918074572067?text=Hello%20Grainhub%2C%20I%20need%20a%20quotation%20for%20a%20catering%20order." target="_blank" class="bg-white/10 hover:bg-white/20 text-white font-semibold border border-white/20 px-5 py-3 rounded-xl text-sm flex items-center gap-2 transition">
+                <i data-lucide="message-square" class="w-4 h-4 text-emerald-400"></i> WhatsApp Inquiries (+91 80745 72067)
+              </a>
+            </div>
+          </div>
+          <div class="lg:col-span-4 bg-white/5 p-6 rounded-2xl border border-white/10 space-y-3">
+            <h4 class="text-amber-200 font-bold text-base flex items-center gap-2">
+              <i data-lucide="check-circle-2" class="w-5 h-5 text-amber-400"></i> Why Caterers Trust Grainhub:
+            </h4>
+            <ul class="text-xs text-stone-300 space-y-2.5">
+              <li class="flex items-center gap-2"><i data-lucide="badge-check" class="w-4 h-4 text-brand-400"></i> Genuine Kurnool & Miryalaguda Lots</li>
+              <li class="flex items-center gap-2"><i data-lucide="badge-check" class="w-4 h-4 text-brand-400"></i> Minimum 1-Year Aged Grains</li>
+              <li class="flex items-center gap-2"><i data-lucide="badge-check" class="w-4 h-4 text-brand-400"></i> Same-day emergency tempo dispatch</li>
+              <li class="flex items-center gap-2"><i data-lucide="badge-check" class="w-4 h-4 text-brand-400"></i> Official GST Invoices ready</li>
+            </ul>
+          </div>
+        </div>
+      </div>
+    </section>
+
+  </main>
+
+  <!-- ADMIN INVENTORY & PRODUCT CONTROL VIEW -->
+  <main id="admin-view" class="hidden flex-grow bg-stone-100 py-8">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      
+      <!-- Admin Header -->
+      <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-4 bg-white p-6 rounded-2xl border border-stone-200 shadow-sm mb-6">
+        <div>
+          <div class="flex items-center gap-2">
+            <span class="bg-amber-100 text-amber-800 text-xs font-bold px-2.5 py-0.5 rounded-full border border-amber-300">Grainhub Admin</span>
+            <h2 class="text-2xl font-bold text-stone-900">Inventory & Pricing Dashboard</h2>
+          </div>
+          <p class="text-xs text-stone-500 mt-1">Manage bag rates, add new rice varieties, and track incoming WhatsApp deliveries.</p>
+        </div>
+
+        <div class="flex items-center gap-3">
+          <button onclick="toggleAdminView()" class="bg-stone-200 hover:bg-stone-300 text-stone-800 font-semibold text-xs sm:text-sm px-4 py-2.5 rounded-xl transition flex items-center gap-1.5">
+            <i data-lucide="store" class="w-4 h-4"></i> Customer Storefront
+          </button>
+        </div>
+      </div>
+
+      <!-- Live Key Metrics Row -->
+      <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 mb-6">
+        <div class="bg-white p-5 rounded-2xl border border-stone-200 shadow-sm">
+          <div class="flex justify-between items-center text-stone-500 text-xs font-semibold">
+            <span>Total Catalog Varieties</span>
+            <i data-lucide="boxes" class="w-4 h-4 text-brand-600"></i>
+          </div>
+          <div class="text-2xl font-black text-stone-900 mt-2" id="metric-total-products">0</div>
+          <span class="text-[11px] text-emerald-600 font-medium flex items-center gap-1 mt-1">
+            <i data-lucide="check" class="w-3 h-3"></i> Synchronized live
+          </span>
+        </div>
+
+        <div class="bg-white p-5 rounded-2xl border border-stone-200 shadow-sm">
+          <div class="flex justify-between items-center text-stone-500 text-xs font-semibold">
+            <span>Low Stock Alerts (&le; 10 Bags)</span>
+            <i data-lucide="alert-triangle" class="w-4 h-4 text-amber-500"></i>
+          </div>
+          <div class="text-2xl font-black text-amber-600 mt-2" id="metric-low-stock">0</div>
+          <span class="text-[11px] text-stone-400 mt-1">Requires mill restock</span>
+        </div>
+
+        <div class="bg-white p-5 rounded-2xl border border-stone-200 shadow-sm">
+          <div class="flex justify-between items-center text-stone-500 text-xs font-semibold">
+            <span>Incoming Orders</span>
+            <i data-lucide="receipt" class="w-4 h-4 text-emerald-600"></i>
+          </div>
+          <div class="text-2xl font-black text-stone-900 mt-2" id="metric-orders-count">0</div>
+          <span class="text-[11px] text-stone-400 mt-1">Via Store & WhatsApp</span>
+        </div>
+
+        <div class="bg-white p-5 rounded-2xl border border-stone-200 shadow-sm">
+          <div class="flex justify-between items-center text-stone-500 text-xs font-semibold">
+            <span>UPI & Dispatch Contact</span>
+            <i data-lucide="qr-code" class="w-4 h-4 text-purple-600"></i>
+          </div>
+          <div class="text-xs font-mono font-bold text-stone-900 mt-2">8074572067@ptsbi</div>
+          <span class="text-[11px] text-stone-500 mt-0.5">Phone: 092462 92724</span>
+        </div>
+      </div>
+
+      <!-- Admin Product Management Table -->
+      <div class="bg-white rounded-2xl border border-stone-200 shadow-sm overflow-hidden mb-8">
+        <!-- HEADER WITH INLINE ADD BUTTON -->
+        <div class="p-5 border-b border-stone-100 flex flex-col sm:flex-row sm:items-center justify-between gap-3">
+          <div>
+            <h3 class="font-bold text-stone-900 text-base">Grainhub Stock & Price Control Center</h3>
+            <p class="text-xs text-stone-500">Edit bag rates, increment/decrement stocks, or update variety info.</p>
+          </div>
+          <div class="flex items-center gap-3">
+            <input 
+              type="text" 
+              placeholder="Search table..." 
+              oninput="renderAdminTable(this.value)" 
+              class="px-3 py-1.5 bg-stone-50 border border-stone-200 rounded-lg text-xs focus:outline-none focus:ring-2 focus:ring-brand-500 w-full sm:w-auto"
+            >
+            <button onclick="openProductModal()" class="bg-brand-600 hover:bg-brand-700 text-white font-bold text-xs px-3 py-1.5 rounded-lg transition flex items-center gap-1.5 shadow-sm whitespace-nowrap">
+              <i data-lucide="plus" class="w-3.5 h-3.5"></i> Add Item
+            </button>
+          </div>
+        </div>
+
+        <div class="overflow-x-auto">
+          <table class="w-full text-left text-xs sm:text-sm">
+            <thead class="bg-stone-50 text-stone-600 font-semibold border-b border-stone-200 uppercase text-[11px]">
+              <tr>
+                <th class="py-3 px-4">Item Details</th>
+                <th class="py-3 px-4">Category</th>
+                <th class="py-3 px-4">Bulk Bag Rate</th>
+                <th class="py-3 px-4">Retail Prices (10kg / 1kg)</th>
+                <th class="py-3 px-4">Bag Stock</th>
+                <th class="py-3 px-4">Status</th>
+                <th class="py-3 px-4 text-right">Actions</th>
+              </tr>
+            </thead>
+            <tbody id="admin-table-body" class="divide-y divide-stone-100 font-normal text-stone-700">
+            </tbody>
+          </table>
+        </div>
+      </div>
+
+      <!-- Customer Orders Table with Printable GST Invoice Trigger -->
+      <div class="bg-white rounded-2xl border border-stone-200 shadow-sm overflow-hidden">
+        <div class="p-5 border-b border-stone-100">
+          <h3 class="font-bold text-stone-900 text-base">Recent Orders & Invoices</h3>
+          <p class="text-xs text-stone-500">Orders submitted by clients through Grainhub or WhatsApp.</p>
+        </div>
+
+        <div class="overflow-x-auto">
+          <table class="w-full text-left text-xs sm:text-sm">
+            <thead class="bg-stone-50 text-stone-600 font-semibold border-b border-stone-200 uppercase text-[11px]">
+              <tr>
+                <th class="py-3 px-4">Order ID & Date</th>
+                <th class="py-3 px-4">Customer Details</th>
+                <th class="py-3 px-4">Delivery Details</th>
+                <th class="py-3 px-4">Items Summary</th>
+                <th class="py-3 px-4">Total Amount</th>
+                <th class="py-3 px-4">Status</th>
+                <th class="py-3 px-4 text-right">Invoice</th>
+              </tr>
+            </thead>
+            <tbody id="admin-orders-table-body" class="divide-y divide-stone-100">
+            </tbody>
+          </table>
+        </div>
+      </div>
+
+    </div>
+  </main>
+
+  <!-- FOOTER SECTION -->
+  <footer class="bg-stone-950 text-stone-300 border-t border-stone-800 text-xs sm:text-sm mt-auto">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
+      <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8 mb-10">
+        
+        <div class="space-y-3">
+          <div class="flex items-center gap-2.5">
+            <div class="w-9 h-9 rounded-lg bg-brand-600 text-white flex items-center justify-center font-bold">
+              <i data-lucide="wheat" class="w-5 h-5 text-amber-200"></i>
+            </div>
+            <span class="text-xl font-serif font-bold text-white">Grain<span class="text-brand-500">hub</span></span>
+          </div>
+          <p class="text-stone-400 text-xs leading-relaxed">
+            By Sri Lakshmi Rice Store, Rajamohallah, King Koti, Hyderabad. Supplying authentic regional rice lots and native staples directly from mill depots.
+          </p>
+          <div class="flex items-center gap-2 text-stone-400 text-xs">
+            <i data-lucide="shield-check" class="w-4 h-4 text-brand-400"></i>
+            <span>FSSAI & GST Compliant</span>
+          </div>
+        </div>
+
+        <div class="space-y-2.5">
+          <h4 class="text-white font-bold text-sm tracking-wider uppercase">Store Hours</h4>
+          <p class="text-stone-400 text-xs"><strong>Mon – Sat:</strong> 10:00 AM – 9:30 PM</p>
+          <p class="text-stone-400 text-xs"><strong>Sunday:</strong> 9:00 AM – 2:00 PM</p>
+          <div class="pt-2">
+            <a 
+              href="https://maps.app.goo.gl/bRnsqF8HchEUjFP58" 
+              target="_blank" 
+              class="text-amber-400 hover:text-amber-300 font-semibold text-xs flex items-center gap-1.5"
+            >
+              <i data-lucide="external-link" class="w-3.5 h-3.5"></i> Open in Google Maps
+            </a>
+          </div>
+        </div>
+
+        <div class="space-y-2.5">
+          <h4 class="text-white font-bold text-sm tracking-wider uppercase">Contact & Payment</h4>
+          <p class="text-stone-400 text-xs">
+            Shop Phone: <a href="tel:09246292724" class="text-white hover:text-brand-400 font-semibold">092462 92724</a>
+          </p>
+          <p class="text-stone-400 text-xs">
+            WhatsApp: <a href="https://wa.me/918074572067" class="text-emerald-400 font-semibold hover:underline">+91 80745 72067</a>
+          </p>
+          <div class="pt-1">
+            <span class="text-[11px] text-stone-400 block mb-0.5">UPI ID (SBI Pay / GPay):</span>
+            <span class="inline-block bg-white/10 text-amber-300 px-2.5 py-1 rounded font-mono text-xs font-bold border border-white/10">
+              8074572067@ptsbi
+            </span>
+          </div>
+        </div>
+
+        <div class="space-y-2.5">
+          <h4 class="text-white font-bold text-sm tracking-wider uppercase">Express Delivery Areas</h4>
+          <p class="text-stone-400 text-xs leading-relaxed">
+            King Koti (500001), Kachiguda (500027), Narayanguda (500029), Barkatpura, Abids (500001), Sultan Bazar (500095), Himayatnagar, Basheerbagh, and neighboring areas.
+          </p>
+          <span class="inline-block bg-white/10 text-stone-300 text-[11px] px-2.5 py-1 rounded">
+            Doorstep Tempo Delivery Available
+          </span>
+        </div>
+
+      </div>
+
+      <div class="pt-6 border-t border-stone-800 text-center text-xs text-stone-500 flex flex-col sm:flex-row items-center justify-between gap-2">
+        <p>&copy; 2026 Grainhub (Sri Lakshmi Rice Store). All Rights Reserved.</p>
+        <p>Premium Quality Grains & Staples</p>
+      </div>
+    </div>
+  </footer>
+
+  <!-- SLIDE-OVER CART DRAWER -->
+  <div id="cart-drawer" class="fixed inset-0 z-50 overflow-hidden pointer-events-none transition-all duration-300 opacity-0">
+    <div class="absolute inset-0 bg-stone-900/60 backdrop-blur-sm transition-opacity" onclick="toggleCartDrawer(false)"></div>
+    <div class="fixed inset-y-0 right-0 max-w-full flex pl-6 sm:pl-10">
+      <div class="w-screen max-w-md bg-white shadow-2xl flex flex-col pointer-events-auto transform translate-x-full transition-transform duration-300" id="cart-drawer-panel">
+        
+        <div class="p-5 border-b border-stone-200 bg-stone-50 flex items-center justify-between">
+          <div class="flex items-center gap-2">
+            <i data-lucide="shopping-cart" class="w-5 h-5 text-brand-600"></i>
+            <h3 class="font-serif font-bold text-stone-900 text-lg">Your Grainhub Order</h3>
+          </div>
+          <button onclick="toggleCartDrawer(false)" class="p-2 rounded-lg text-stone-500 hover:bg-stone-200">
+            <i data-lucide="x" class="w-5 h-5"></i>
+          </button>
+        </div>
+
+        <div class="flex-1 overflow-y-auto p-5 space-y-4" id="cart-items-container"></div>
+
+        <div class="p-5 border-t border-stone-200 bg-stone-50 space-y-3">
+          
+          <div class="space-y-1 text-xs text-stone-600">
+            <div class="flex justify-between">
+              <span>Subtotal:</span>
+              <span id="cart-subtotal" class="font-bold text-stone-800">₹0</span>
+            </div>
+            <div class="flex justify-between">
+              <span>Delivery Charges:</span>
+              <span id="cart-delivery" class="text-emerald-700 font-bold">FREE (Above ₹2,000)</span>
+            </div>
+            <div class="flex justify-between text-sm font-bold text-stone-950 pt-2 border-t border-stone-200">
+              <span>Grand Total:</span>
+              <span id="cart-grand-total" class="text-brand-700 text-lg">₹0</span>
+            </div>
+          </div>
+
+          <div class="space-y-2 pt-2 text-xs">
+            <input type="text" id="checkout-name" placeholder="Your Full Name *" class="w-full px-3 py-2 border border-stone-300 rounded-lg focus:ring-2 focus:ring-brand-500 focus:outline-none">
+            <input type="tel" id="checkout-phone" placeholder="Your Mobile Phone (10 Digits) *" class="w-full px-3 py-2 border border-stone-300 rounded-lg focus:ring-2 focus:ring-brand-500 focus:outline-none">
+            
+            <select id="checkout-pincode" class="w-full px-3 py-2 border border-stone-300 rounded-lg bg-white focus:ring-2 focus:ring-brand-500 focus:outline-none text-stone-700">
+              <option value="500001">Hyderabad 500001 (King Koti, Abids)</option>
+              <option value="500027">Hyderabad 500027 (Kachiguda, Barkatpura)</option>
+              <option value="500029">Hyderabad 500029 (Narayanguda, Himayatnagar)</option>
+              <option value="500095">Hyderabad 500095 (Sultan Bazar, Koti)</option>
+              <option value="500002">Hyderabad 500002 (Charminar, Old City)</option>
+              <option value="500004">Hyderabad 500004 (Basheerbagh, Nampally)</option>
+              <option value="other">Other Locality / Bulk Order</option>
+            </select>
+
+            <textarea id="checkout-address" rows="2" placeholder="Door / Flat No., Landmark & Street Address *" class="w-full px-3 py-2 border border-stone-300 rounded-lg focus:ring-2 focus:ring-brand-500 focus:outline-none"></textarea>
+
+            <div class="grid grid-cols-2 gap-2">
+              <select id="checkout-slot" class="w-full px-2.5 py-1.5 border border-stone-300 rounded-lg bg-white text-[11px]">
+                <option value="Today Evening (5PM - 8PM)">Today Evening (5PM - 8PM)</option>
+                <option value="Tomorrow Morning (10AM - 1PM)">Tomorrow Morning (10AM - 1PM)</option>
+                <option value="Store Pickup (Self)">Store Pickup (King Koti)</option>
+              </select>
+
+              <select id="checkout-lift" class="w-full px-2.5 py-1.5 border border-stone-300 rounded-lg bg-white text-[11px]">
+                <option value="Lift Available / Ground Floor">Lift Available / Ground Floor</option>
+                <option value="Stairs Only (1st / 2nd Floor)">Stairs Only (1st / 2nd Floor)</option>
+                <option value="Stairs Only (3rd+ Floor)">Stairs Only (3rd+ Floor)</option>
+              </select>
+            </div>
+          </div>
+
+          <div class="space-y-2 pt-1">
+            <button onclick="processCheckout('whatsapp')" class="w-full bg-emerald-600 hover:bg-emerald-700 text-white font-bold py-3 px-4 rounded-xl transition flex items-center justify-center gap-2 shadow-md shadow-emerald-600/20 text-sm">
+              <i data-lucide="message-circle" class="w-4 h-4"></i>
+              <span>Order via WhatsApp (+91 80745 72067)</span>
+            </button>
+            <button onclick="processCheckout('store')" class="w-full bg-stone-900 hover:bg-stone-800 text-white font-bold py-2.5 px-4 rounded-xl transition text-xs flex items-center justify-center gap-1.5">
+              <i data-lucide="qr-code" class="w-3.5 h-3.5 text-amber-400"></i>
+              <span>Instant UPI QR / Invoice Bill</span>
+            </button>
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </div>
+
+  <!-- MODAL: ADD / EDIT PRODUCT WITH BULK SELECTOR -->
+  <div id="product-modal" class="fixed inset-0 z-50 hidden flex items-center justify-center p-4">
+    <div class="absolute inset-0 bg-stone-950/60 backdrop-blur-sm" onclick="closeProductModal()"></div>
+    <div class="relative bg-white rounded-2xl shadow-2xl max-w-xl w-full p-6 sm:p-8 overflow-y-auto max-h-[90vh] z-10">
+      
+      <div class="flex items-center justify-between border-b border-stone-200 pb-4 mb-5">
+        <div>
+          <h3 class="text-xl font-serif font-bold text-stone-900" id="product-modal-title">Add New Grain Variety</h3>
+          <p class="text-xs text-stone-500">Configure multi-pack rates, available bags, and origin details.</p>
+        </div>
+        <button onclick="closeProductModal()" class="text-stone-400 hover:text-stone-700">
+          <i data-lucide="x" class="w-6 h-6"></i>
+        </button>
+      </div>
+
+      <form id="product-form" onsubmit="handleProductSubmit(event)" class="space-y-4 text-xs sm:text-sm">
+        <input type="hidden" id="form-product-id">
+
+        <div>
+          <label class="block font-semibold text-stone-700 mb-1">Variety Name *</label>
+          <input type="text" id="form-product-name" required placeholder="e.g. Royal Kurnool Sona Masoori (Old Crop)" class="w-full px-3.5 py-2.5 border border-stone-300 rounded-xl focus:ring-2 focus:ring-brand-500 focus:outline-none">
+        </div>
+
+        <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+          <div>
+            <label class="block font-semibold text-stone-700 mb-1">Category *</label>
+            <select id="form-product-cat" required class="w-full px-3.5 py-2.5 border border-stone-300 rounded-xl focus:ring-2 focus:ring-brand-500 focus:outline-none">
+              <option value="sona-masoori">Sona Masoori</option>
+              <option value="basmati">Biryani Basmati</option>
+              <option value="hmt-special">HMT</option>
+              <option value="hmt-special">Kolam </option>
+              <option value="dals-pulses">Dal And Pulses</option>
+              <option value="hmt-special">Sugar,Jaggery</option>
+              <option value="hmt-special">Cereals</option>
+            </select>
+          </div>
+
+          <div>
+            <label class="block font-semibold text-stone-700 mb-1">Badge / Tag</label>
+            <input type="text" id="form-product-badge" placeholder="e.g. Best Seller, Aged 1 Year" class="w-full px-3.5 py-2.5 border border-stone-300 rounded-xl focus:ring-2 focus:ring-brand-500 focus:outline-none">
+          </div>
+        </div>
+
+        <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+          <div>
+            <label class="block font-semibold text-stone-700 mb-1">Origin / Mill Hub</label>
+            <input type="text" id="form-product-origin" placeholder="e.g. Kurnool, Miryalaguda" class="w-full px-3.5 py-2.5 border border-stone-300 rounded-xl focus:ring-2 focus:ring-brand-500 focus:outline-none">
+          </div>
+
+          <div>
+            <label class="block font-semibold text-stone-700 mb-1">Stock Quantity (Bulk Bags)</label>
+            <input type="number" id="form-product-stock" required min="0" placeholder="e.g. 50" class="w-full px-3.5 py-2.5 border border-stone-300 rounded-xl focus:ring-2 focus:ring-brand-500 focus:outline-none">
+          </div>
+        </div>
+
+        <!-- NEW: Bulk Size Selector -->
+        <div>
+          <label class="block font-semibold text-stone-700 mb-1">Bulk Bag Size *</label>
+         <select id="form-bulk-size" required class="w-full px-3.5 py-2.5 border border-stone-300 rounded-xl focus:ring-2 focus:ring-brand-500 focus:outline-none bg-stone-50">
+         <option value="10kg">10 kg</option>
+        <option value="25kg">25 kg</option>
+          <option value="26kg">26 kg</option>
+          <option value="30kg">30 kg</option>
+          <option value="50kg">50 kg</option>
+        </select>
+        </div>
+
+        <!-- Tiered Pack Pricing -->
+        <div class="p-4 bg-stone-50 rounded-xl border border-stone-200 space-y-3">
+          <h4 class="font-bold text-stone-800 text-xs uppercase tracking-wider">Multi-Pack Pricing Structure (₹)</h4>
+          <div class="grid grid-cols-2 sm:grid-cols-4 gap-3">
+            <div>
+              <label class="block text-[11px] font-semibold text-stone-600 mb-1">Bulk Bag Rate</label>
+              <input type="number" id="form-price-bulk" required min="1" placeholder="₹1450" class="w-full px-2.5 py-2 border border-stone-300 rounded-lg text-xs font-bold text-brand-700">
+            </div>
+            <div>
+              <label class="block text-[11px] font-semibold text-stone-600 mb-1">10 kg Pack</label>
+              <input type="number" id="form-price-10kg" required min="1" placeholder="₹620" class="w-full px-2.5 py-2 border border-stone-300 rounded-lg text-xs">
+            </div>
+            <div>
+              <label class="block text-[11px] font-semibold text-stone-600 mb-1">5 kg Pack</label>
+              <input type="number" id="form-price-5kg" required min="1" placeholder="₹320" class="w-full px-2.5 py-2 border border-stone-300 rounded-lg text-xs">
+            </div>
+            <div>
+              <label class="block text-[11px] font-semibold text-stone-600 mb-1">1 kg Pack</label>
+              <input type="number" id="form-price-1kg" required min="1" placeholder="₹65" class="w-full px-2.5 py-2 border border-stone-300 rounded-lg text-xs">
+            </div>
+          </div>
+        </div>
+
+        <div>
+          <label class="block font-semibold text-stone-700 mb-1">Image URL</label>
+          <input type="url" id="form-product-image" placeholder="https://images.unsplash.com/..." class="w-full px-3.5 py-2.5 border border-stone-300 rounded-xl focus:ring-2 focus:ring-brand-500 focus:outline-none">
+        </div>
+
+        <div>
+          <label class="block font-semibold text-stone-700 mb-1">Cooking Notes & Characteristics</label>
+          <textarea id="form-product-desc" rows="2" placeholder="e.g. Aged 14 months, perfect slim grains, expands twice its size..." class="w-full px-3.5 py-2 border border-stone-300 rounded-xl focus:ring-2 focus:ring-brand-500 focus:outline-none"></textarea>
+        </div>
+
+        <div class="flex items-center justify-end gap-3 pt-4 border-t border-stone-200">
+          <button type="button" onclick="closeProductModal()" class="px-4 py-2 text-stone-600 hover:bg-stone-100 rounded-xl font-semibold">Cancel</button>
+          <button type="submit" class="bg-brand-600 hover:bg-brand-700 text-white px-6 py-2.5 rounded-xl font-bold transition shadow-md shadow-brand-600/30">Save Grain Variety</button>
+        </div>
+      </form>
+
+    </div>
+  </div>
+
+  <!-- PRINTABLE GST INVOICE & UPI PAYMENT MODAL -->
+  <div id="invoice-modal" class="fixed inset-0 z-50 hidden flex items-center justify-center p-4">
+    <div class="absolute inset-0 bg-stone-950/70 no-print" onclick="closeInvoiceModal()"></div>
+    <div class="relative bg-white rounded-2xl shadow-2xl max-w-2xl w-full p-6 sm:p-8 max-h-[92vh] overflow-y-auto z-10 text-stone-800">
+      
+      <div class="flex justify-between items-center pb-4 border-b border-stone-200 mb-6 no-print">
+        <span class="text-xs font-bold text-brand-700 uppercase tracking-wide">Grainhub Tax Invoice & UPI Payment</span>
+        <div class="flex gap-2">
+          <button onclick="window.print()" class="bg-brand-600 hover:bg-brand-700 text-white text-xs font-bold px-4 py-2 rounded-lg flex items-center gap-1.5 shadow-sm">
+            <i data-lucide="printer" class="w-3.5 h-3.5"></i> Print Invoice
+          </button>
+          <button onclick="closeInvoiceModal()" class="text-stone-400 hover:text-stone-700 p-1.5 rounded-lg">
+            <i data-lucide="x" class="w-5 h-5"></i>
+          </button>
+        </div>
+      </div>
+
+      <div class="space-y-6" id="printable-invoice-content"></div>
+
+    </div>
+  </div>
+
+  <!-- PASSCODE MODAL FOR ADMIN ACCESS -->
+  <div id="passcode-modal" class="fixed inset-0 z-50 hidden flex items-center justify-center p-4">
+    <div class="absolute inset-0 bg-stone-900/60 backdrop-blur-sm" onclick="closePasscodeModal()"></div>
+    <div class="relative bg-white rounded-2xl shadow-2xl max-w-sm w-full p-6 text-center z-10">
+      <div class="w-12 h-12 bg-amber-100 text-brand-700 rounded-full flex items-center justify-center mx-auto mb-3">
+        <i data-lucide="lock" class="w-6 h-6"></i>
+      </div>
+      <h3 class="font-bold text-stone-900 text-lg">Grainhub Admin Access</h3>
+      <p class="text-xs text-stone-500 mb-4">Enter management PIN (Default: <strong class="text-stone-700">1234</strong>)</p>
+      
+      <input 
+        type="password" 
+        id="admin-pin-input" 
+        maxlength="6" 
+        placeholder="Enter PIN" 
+        class="w-full text-center tracking-widest text-xl font-bold py-2 border border-stone-300 rounded-xl mb-4 focus:ring-2 focus:ring-brand-500 focus:outline-none"
+        onkeydown="if(event.key === 'Enter') verifyPasscode()"
+      >
+      <div class="flex gap-2">
+        <button onclick="closePasscodeModal()" class="flex-1 py-2 text-stone-600 hover:bg-stone-100 rounded-xl font-semibold text-xs">Cancel</button>
+        <button onclick="verifyPasscode()" class="flex-1 py-2 bg-brand-600 hover:bg-brand-700 text-white rounded-xl font-bold text-xs">Unlock</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- JAVASCRIPT APP LOGIC -->
+  <script>
+    // Updated Default Products with Dynamic Bulk Sizes
+    const DEFAULT_PRODUCTS = [
+      {
+        id: "prod-1",
+        name: "Royal Kurnool Sona Masoori (BPT 5204) - 1 Year Aged",
+        category: "sona-masoori",
+        badge: "Depot Best Seller",
+        origin: "Kurnool, Andhra Pradesh",
+        stockBags: 45,
+        bulkSize: "26kg", // DYNAMIC BAG SIZE
+        inStock: true,
+        desc: "Old crop Kurnool Sona Masoori. Non-sticky, lightweight, and expands significantly upon cooking. Standard choice for Andhra/Telangana households.",
+        image: "https://images.unsplash.com/photo-1586201375761-83865001e31c?auto=format&fit=crop&w=600&q=80",
+        prices: { bulk: 1450, "10kg": 620, "5kg": 320, "1kg": 65 }
+      },
+      {
+        id: "prod-2",
+        name: "Miryalaguda Premium HMT Sona Rice",
+        category: "hmt-special",
+        badge: "Finest Grain",
+        origin: "Miryalaguda, Telangana",
+        stockBags: 32,
+        bulkSize: "26kg",
+        inStock: true,
+        desc: "Super fine, aromatic daily dining rice with high starch purity. Directly sourced from Telangana's premier paddy belt in Miryalaguda.",
+        image: "https://images.unsplash.com/photo-1536304993881-ff6e9eefa2a6?auto=format&fit=crop&w=600&q=80",
+        prices: { bulk: 1550, "10kg": 660, "5kg": 340, "1kg": 70 }
+      },
+      {
+        id: "prod-3",
+        name: "Royal 1121 XXL Aged Biryani Basmati",
+        category: "basmati",
+        badge: "Catering Choice",
+        origin: "Punjab / Haryana Tarai",
+        stockBags: 20,
+        bulkSize: "25kg", // Default Basmati Size
+        inStock: true,
+        desc: "Extra long slender grain with majestic aroma. Expands to 24mm length after cooking. Essential for authentic Dum Biryani.",
+        image: "https://images.unsplash.com/photo-1596560548464-f010549b84d7?auto=format&fit=crop&w=600&q=80",
+        prices: { bulk: 2850, "10kg": 1190, "5kg": 610, "1kg": 125 }
+      },
+      {
+        id: "prod-4",
+        name: "Tandur Desi Unpolished Toor Dal",
+        category: "dals-pulses",
+        badge: "GI Tag Certified",
+        origin: "Tandur, Telangana",
+        stockBags: 18,
+        bulkSize: "25kg",
+        inStock: true,
+        desc: "Authentic Tandur Pigeon Pea. Unpolished, high protein, rich yellow color, and prepares thick sambar and pappu.",
+        image: "https://images.unsplash.com/photo-1546833999-b9f581a1996d?auto=format&fit=crop&w=600&q=80",
+        prices: { bulk: 3950, "10kg": 1650, "5kg": 850, "1kg": 175 }
+      },
+      {
+        id: "prod-5",
+        name: "Special Wada Kolam Rice (Silky Polish)",
+        category: "hmt-special",
+        badge: "Soft Cooking",
+        origin: "Maharashtra / North Telangana",
+        stockBags: 8,
+        bulkSize: "26kg",
+        inStock: true,
+        desc: "Short tender grain with high water absorption. Perfect for curd rice, soft khichdi, and children's daily meals.",
+        image: "https://images.unsplash.com/photo-1551462147-ff29053bfc14?auto=format&fit=crop&w=600&q=80",
+        prices: { bulk: 1380, "10kg": 590, "5kg": 305, "1kg": 62 }
+      },
+      {
+        id: "prod-6",
+        name: "Chitti Muthyalu (Aromatic Jeera Rice)",
+        category: "basmati",
+        badge: "Specialty Pulao",
+        origin: "Godavari Region",
+        stockBags: 12,
+        bulkSize: "25kg",
+        inStock: true,
+        desc: "Tiny pearl-like grains filled with intense natural fragrance. The royal choice for South Indian Bagara rice and traditional mutton pulao.",
+        image: "https://images.unsplash.com/photo-1512058564366-18510be2db19?auto=format&fit=crop&w=600&q=80",
+        prices: { bulk: 2400, "10kg": 1020, "5kg": 520, "1kg": 110 }
+      }
+    ];
+
+    const DEFAULT_ORDERS = [
+      {
+        id: "GH-9201",
+        date: "2026-09-11 11:20",
+        name: "Venkat Rao",
+        phone: "9848012345",
+        locality: "King Koti, Hyderabad (500001)",
+        slot: "Today Evening (5PM - 8PM)",
+        lift: "Lift Available / Ground Floor",
+        items: [{ name: "Royal Kurnool Sona Masoori", pack: "26kg", qty: 2, price: 1450 }],
+        total: 2900,
+        status: "Delivered"
+      }
+    ];
+
+    let products = [];
+    let orders = [];
+    let cart = [];
+    let activeCategory = 'all';
+    let searchQuery = '';
+    let selectedPackPerProduct = {};
+    let isAdminUnlocked = false;
+
+    const WA_NUMBER = "8074572067";
+    const CALL_PHONE = "09246292724";
+    const UPI_ID = "8074572067@ptsbi";
+    const BRAND_NAME = "Grainhub";
+
+    window.addEventListener('DOMContentLoaded', () => {
+      loadInitialData();
+      lucide.createIcons();
+    });
+
+    async function loadInitialData() {
+      const localProds = localStorage.getItem('grainhub_products');
+      products = localProds ? JSON.parse(localProds) : [...DEFAULT_PRODUCTS];
+      if (!localProds) localStorage.setItem('grainhub_products', JSON.stringify(products));
+
+      const localOrders = localStorage.getItem('grainhub_orders');
+      orders = localOrders ? JSON.parse(localOrders) : [...DEFAULT_ORDERS];
+      if (!localOrders) localStorage.setItem('grainhub_orders', JSON.stringify(orders));
+
+      products.forEach(p => {
+        const bulk = p.bulkSize || "26kg";
+        if (!selectedPackPerProduct[p.id]) selectedPackPerProduct[p.id] = bulk;
+      });
+
+      renderStorefront();
+      populateCalculatorSelect();
+      runCalculator();
+      updateCartUI();
+      renderAdminDashboard();
+
+      try {
+        if (window.fb && window.fb.db) {
+          const { db, collection, onSnapshot, signInAnonymously, auth } = window.fb;
+          await signInAnonymously(auth).catch(() => {});
+          const prodsCol = collection(db, 'artifacts', 'grainhub', 'public', 'data', 'products');
+          onSnapshot(prodsCol, (snapshot) => {
+            if (!snapshot.empty) {
+              const live = [];
+              snapshot.forEach(doc => live.push({ id: doc.id, ...doc.data() }));
+              products = live;
+              localStorage.setItem('grainhub_products', JSON.stringify(products));
+              renderStorefront();
+              populateCalculatorSelect();
+              renderAdminDashboard();
+            }
+          }, () => {});
+        }
+      } catch (e) {}
+    }
+
+    function saveProducts() {
+      localStorage.setItem('grainhub_products', JSON.stringify(products));
+      renderStorefront();
+      populateCalculatorSelect();
+      renderAdminDashboard();
+      
+      if (window.fb && window.fb.db) {
+        try {
+          const { db, doc, setDoc } = window.fb;
+          products.forEach(p => {
+            setDoc(doc(db, 'artifacts', 'grainhub', 'public', 'data', 'products', p.id), p, { merge: true });
+          });
+        } catch(e) {}
+      }
+    }
+
+    function saveOrders() {
+      localStorage.setItem('grainhub_orders', JSON.stringify(orders));
+      renderAdminOrders();
+      updateAdminMetrics();
+    }
+
+    function renderStorefront() {
+      const container = document.getElementById('products-grid');
+      const emptyView = document.getElementById('no-products-view');
+
+      const filtered = products.filter(p => {
+        const matchesCat = activeCategory === 'all' || p.category === activeCategory;
+        const matchesSearch = !searchQuery || 
+          p.name.toLowerCase().includes(searchQuery.toLowerCase()) || 
+          p.desc.toLowerCase().includes(searchQuery.toLowerCase()) ||
+          p.origin.toLowerCase().includes(searchQuery.toLowerCase());
+        return matchesCat && matchesSearch;
+      });
+
+      if (filtered.length === 0) {
+        container.innerHTML = '';
+        emptyView.classList.remove('hidden');
+        return;
+      }
+
+      emptyView.classList.add('hidden');
+
+      container.innerHTML = filtered.map(prod => {
+        const bulkSizeStr = prod.bulkSize || "26kg";
+        const currentPack = selectedPackPerProduct[prod.id] || bulkSizeStr;
+        const currentPrice = currentPack === bulkSizeStr ? (prod.prices.bulk || prod.prices["25kg"]) : prod.prices[currentPack];
+
+        return `
+          <div class="bg-white rounded-2xl border border-stone-200 shadow-sm hover:shadow-md transition flex flex-col overflow-hidden group">
+            <div class="relative h-48 w-full bg-stone-100 overflow-hidden">
+              <img 
+                src="${prod.image}" 
+                alt="${prod.name}" 
+                class="w-full h-full object-cover group-hover:scale-105 transition duration-500"
+                onerror="this.src='https://images.unsplash.com/photo-1586201375761-83865001e31c?auto=format&fit=crop&w=600&q=80'"
+              >
+              ${prod.badge ? `
+                <span class="absolute top-3 left-3 bg-brand-600 text-white text-[10px] font-extrabold uppercase px-2.5 py-1 rounded-full shadow-md">
+                  ${prod.badge}
+                </span>
+              ` : ''}
+              
+              <div class="absolute bottom-2 right-2 bg-stone-900/80 backdrop-blur-sm text-white text-[11px] px-2 py-0.5 rounded font-medium">
+                ${prod.origin}
+              </div>
+            </div>
+
+            <div class="p-5 flex-1 flex flex-col justify-between">
+              <div>
+                <h3 class="font-serif font-bold text-stone-900 text-base leading-snug group-hover:text-brand-600 transition">
+                  ${prod.name}
+                </h3>
+                <p class="text-xs text-stone-500 mt-2 line-clamp-2 leading-relaxed">
+                  ${prod.desc}
+                </p>
+
+                <div class="mt-4">
+                  <span class="text-[11px] font-semibold text-stone-500 block mb-1.5">Choose Pack Size:</span>
+                  <div class="grid grid-cols-4 gap-1.5 bg-stone-100 p-1 rounded-xl">
+                    ${[bulkSizeStr, '10kg', '5kg', '1kg'].map(pack => `
+                      <button 
+                        onclick="setProductPack('${prod.id}', '${pack}')"
+                        class="text-xs font-bold py-1.5 rounded-lg transition ${currentPack === pack ? 'bg-white text-stone-900 shadow-sm border border-stone-200' : 'text-stone-600 hover:text-stone-900'}"
+                      >
+                        ${pack}
+                      </button>
+                    `).join('')}
+                  </div>
+                </div>
+              </div>
+
+              <div class="mt-5 pt-3 border-t border-stone-100 flex items-center justify-between">
+                <div>
+                  <span class="text-[10px] text-stone-400 font-semibold block uppercase">Price (${currentPack})</span>
+                  <div class="text-lg font-black text-stone-900">₹${currentPrice.toLocaleString()}</div>
+                </div>
+
+                <div class="flex items-center gap-1.5">
+                  <button 
+                    onclick="addToCart('${prod.id}', '${currentPack}')"
+                    class="bg-brand-600 hover:bg-brand-700 text-white font-bold text-xs px-3.5 py-2 rounded-xl transition flex items-center gap-1 shadow-sm active:scale-95"
+                  >
+                    <i data-lucide="shopping-bag" class="w-3.5 h-3.5"></i> Add
+                  </button>
+                  <a 
+                    href="https://wa.me/91${WA_NUMBER}?text=Hi%20Grainhub%2C%20I%20want%20to%20order%20${encodeURIComponent(prod.name)}%20(${currentPack})%20priced%20at%20%E2%82%B9${currentPrice}."
+                    target="_blank"
+                    class="bg-emerald-100 hover:bg-emerald-200 text-emerald-800 p-2 rounded-xl transition"
+                    title="WhatsApp Query"
+                  >
+                    <i data-lucide="message-circle" class="w-4 h-4"></i>
+                  </a>
+                </div>
+              </div>
+
+            </div>
+          </div>
+        `;
+      }).join('');
+
+      lucide.createIcons();
+    }
+
+    function setProductPack(prodId, pack) {
+      selectedPackPerProduct[prodId] = pack;
+      renderStorefront();
+    }
+
+    function filterCategory(cat) {
+      activeCategory = cat;
+      document.querySelectorAll('.cat-pill').forEach(btn => {
+        btn.classList.remove('bg-stone-900', 'text-white');
+        btn.classList.add('bg-white', 'text-stone-700');
+      });
+      event.target.classList.remove('bg-white', 'text-stone-700');
+      event.target.classList.add('bg-stone-900', 'text-white');
+      renderStorefront();
+    }
+
+    function handleSearch(val) {
+      searchQuery = val.trim();
+      renderStorefront();
+    }
+
+    function resetFilters() {
+      searchQuery = '';
+      activeCategory = 'all';
+      const searchInputs = document.querySelectorAll('input[placeholder*="Search"]');
+      searchInputs.forEach(i => i.value = '');
+      renderStorefront();
+    }
+
+    function populateCalculatorSelect() {
+      const select = document.getElementById('calc-variety-select');
+      if (!select) return;
+      select.innerHTML = products.map(p => {
+        const bulkPrice = p.prices.bulk || p.prices['25kg'];
+        const bulkLabel = p.bulkSize || "26kg";
+        return `<option value="${p.id}">${p.name} (₹${bulkPrice}/${bulkLabel})</option>`;
+      }).join('');
+    }
+
+    function stepCalculatorQty(delta) {
+      const input = document.getElementById('calc-bags');
+      let val = parseInt(input.value) || 1;
+      val = Math.max(1, val + delta);
+      input.value = val;
+      runCalculator();
+    }
+
+    function runCalculator() {
+      const select = document.getElementById('calc-variety-select');
+      const qtyInput = document.getElementById('calc-bags');
+      const priceDisplay = document.getElementById('calc-total-price');
+      const discountLabel = document.getElementById('calc-discount-label');
+
+      if (!select || !qtyInput || products.length === 0) return;
+
+      const prodId = select.value;
+      const qty = parseInt(qtyInput.value) || 1;
+      const product = products.find(p => p.id === prodId) || products[0];
+
+      const baseRate = product.prices.bulk || product.prices['25kg'];
+      let total = baseRate * qty;
+      let discountRate = 0;
+
+      if (qty >= 20) {
+        discountRate = 0.08;
+        discountLabel.textContent = "8% Wholesale Slab Applied";
+      } else if (qty >= 5) {
+        discountRate = 0.05;
+        discountLabel.textContent = "5% Bulk Mess Slab Applied";
+      } else {
+        discountLabel.textContent = "Standard Mill Retail";
+      }
+
+      const discountedTotal = Math.round(total * (1 - discountRate));
+      priceDisplay.textContent = `₹${discountedTotal.toLocaleString()}`;
+    }
+
+    function addCalculatedToCart() {
+      const select = document.getElementById('calc-variety-select');
+      const qtyInput = document.getElementById('calc-bags');
+      if (!select || !qtyInput) return;
+
+      const prodId = select.value;
+      const qty = parseInt(qtyInput.value) || 1;
+      const product = products.find(p => p.id === prodId);
+      const bulkLabel = product.bulkSize || "26kg";
+      
+      for (let i = 0; i < qty; i++) {
+        addToCart(prodId, bulkLabel, false);
+      }
+      toggleCartDrawer(true);
+    }
+
+    function toggleCartDrawer(open) {
+      const drawer = document.getElementById('cart-drawer');
+      const panel = document.getElementById('cart-drawer-panel');
+
+      if (open) {
+        drawer.classList.remove('pointer-events-none', 'opacity-0');
+        drawer.classList.add('opacity-100');
+        panel.classList.remove('translate-x-full');
+      } else {
+        panel.classList.add('translate-x-full');
+        setTimeout(() => {
+          drawer.classList.add('pointer-events-none', 'opacity-0');
+          drawer.classList.remove('opacity-100');
+        }, 250);
+      }
+    }
+
+    function addToCart(prodId, pack, notify = true) {
+      const product = products.find(p => p.id === prodId);
+      if (!product) return;
+
+      const bulkStr = product.bulkSize || "26kg";
+      const itemPrice = pack === bulkStr ? (product.prices.bulk || product.prices['25kg']) : product.prices[pack];
+      
+      const existing = cart.find(item => item.id === prodId && item.pack === pack);
+
+      if (existing) {
+        existing.qty += 1;
+      } else {
+        cart.push({
+          id: prodId,
+          name: product.name,
+          pack: pack,
+          price: itemPrice,
+          qty: 1
+        });
+      }
+
+      updateCartUI();
+      if (notify) toggleCartDrawer(true);
+    }
+
+    function updateCartItemQty(prodId, pack, delta) {
+      const idx = cart.findIndex(item => item.id === prodId && item.pack === pack);
+      if (idx === -1) return;
+
+      cart[idx].qty += delta;
+      if (cart[idx].qty <= 0) cart.splice(idx, 1);
+
+      updateCartUI();
+    }
+
+    function updateCartUI() {
+      const badge = document.getElementById('cart-badge-count');
+      const container = document.getElementById('cart-items-container');
+      const subtotalEl = document.getElementById('cart-subtotal');
+      const grandTotalEl = document.getElementById('cart-grand-total');
+
+      const totalItems = cart.reduce((acc, i) => acc + i.qty, 0);
+      badge.textContent = totalItems;
+
+      if (cart.length === 0) {
+        container.innerHTML = `
+          <div class="text-center py-12 text-stone-400">
+            <i data-lucide="shopping-bag" class="w-12 h-12 mx-auto mb-2 opacity-40"></i>
+            <p class="font-medium text-stone-600">Your bag is empty</p>
+            <p class="text-xs text-stone-400 mt-1">Select rice varieties to place a WhatsApp or Store order.</p>
+          </div>
+        `;
+        subtotalEl.textContent = '₹0';
+        grandTotalEl.textContent = '₹0';
+        lucide.createIcons();
+        return;
+      }
+
+      let subtotal = 0;
+      container.innerHTML = cart.map(item => {
+        const lineTotal = item.price * item.qty;
+        subtotal += lineTotal;
+
+        return `
+          <div class="flex items-center justify-between gap-3 p-3 bg-stone-50 rounded-xl border border-stone-200">
+            <div class="flex-1">
+              <h4 class="font-bold text-stone-900 text-xs leading-snug">${item.name}</h4>
+              <span class="text-[11px] text-brand-700 font-semibold">Pack: ${item.pack} • ₹${item.price}</span>
+            </div>
+
+            <div class="flex items-center gap-1.5 bg-white px-2 py-1 rounded-lg border border-stone-200">
+              <button onclick="updateCartItemQty('${item.id}', '${item.pack}', -1)" class="w-5 h-5 text-stone-600 hover:text-stone-900 text-xs font-bold">-</button>
+              <span class="text-xs font-black text-stone-900 px-1">${item.qty}</span>
+              <button onclick="updateCartItemQty('${item.id}', '${item.pack}', 1)" class="w-5 h-5 text-stone-600 hover:text-stone-900 text-xs font-bold">+</button>
+            </div>
+
+            <div class="text-right">
+              <span class="font-bold text-xs text-stone-900">₹${lineTotal.toLocaleString()}</span>
+            </div>
+          </div>
+        `;
+      }).join('');
+
+      subtotalEl.textContent = `₹${subtotal.toLocaleString()}`;
+      grandTotalEl.textContent = `₹${subtotal.toLocaleString()}`;
+      lucide.createIcons();
+    }
+
+    function processCheckout(mode) {
+      if (cart.length === 0) {
+        alert("Your cart is empty! Please add rice varieties first.");
+        return;
+      }
+
+      const name = document.getElementById('checkout-name').value.trim();
+      const phone = document.getElementById('checkout-phone').value.trim();
+      const pincode = document.getElementById('checkout-pincode').value;
+      const address = document.getElementById('checkout-address').value.trim();
+      const slot = document.getElementById('checkout-slot').value;
+      const lift = document.getElementById('checkout-lift').value;
+
+      if (!name || !phone || !address) {
+        alert("Please enter your Name, Phone Number, and Complete Address.");
+        return;
+      }
+
+      const totalAmount = cart.reduce((acc, i) => acc + (i.price * i.qty), 0);
+      const newOrderId = "GH-" + Math.floor(1000 + Math.random() * 9000);
+      const orderDate = new Date().toISOString().replace('T', ' ').substring(0, 16);
+
+      const orderObj = {
+        id: newOrderId,
+        date: orderDate,
+        name: name,
+        phone: phone,
+        locality: `${address}, Hyd (${pincode})`,
+        slot: slot,
+        lift: lift,
+        items: [...cart],
+        total: totalAmount,
+        status: "Pending"
+      };
+
+      orders.unshift(orderObj);
+      saveOrders();
+
+      if (mode === 'whatsapp') {
+        let msg = `*NEW ORDER - GRAINHUB*\n`;
+        msg += `Order ID: ${newOrderId}\n`;
+        msg += `Customer Name: ${name}\n`;
+        msg += `Mobile: ${phone}\n`;
+        msg += `Delivery Address: ${address} (Pincode: ${pincode})\n`;
+        msg += `Preferred Slot: ${slot}\n`;
+        msg += `Access: ${lift}\n\n`;
+        msg += `*GRAIN ITEMS:*\n`;
+        cart.forEach((it, idx) => {
+          msg += `${idx + 1}. ${it.name} (${it.pack}) x ${it.qty} = ₹${it.price * it.qty}\n`;
+        });
+        msg += `\n*Grand Total: ₹${totalAmount.toLocaleString()}*`;
+        msg += `\n*Payment via UPI:* ${UPI_ID}`;
+        msg += `\nFulfilled by Sri Lakshmi Rice Store, King Koti, Hyd.`;
+
+        const waUrl = `https://wa.me/91${WA_NUMBER}?text=${encodeURIComponent(msg)}`;
+        window.open(waUrl, '_blank');
+      }
+
+      cart = [];
+      updateCartUI();
+      toggleCartDrawer(false);
+      openInvoiceModal(orderObj.id);
+    }
+
+    function toggleAdminView() {
+      if (!isAdminUnlocked) {
+        document.getElementById('passcode-modal').classList.remove('hidden');
+        document.getElementById('admin-pin-input').focus();
+        return;
+      }
+
+      const storefront = document.getElementById('storefront-view');
+      const adminView = document.getElementById('admin-view');
+      const adminPill = document.getElementById('admin-btn-text');
+
+      if (adminView.classList.contains('hidden')) {
+        adminView.classList.remove('hidden');
+        storefront.classList.add('hidden');
+        adminPill.textContent = "Customer View";
+        renderAdminDashboard();
+      } else {
+        adminView.classList.add('hidden');
+        storefront.classList.remove('hidden');
+        adminPill.textContent = "Admin Panel";
+        renderStorefront();
+      }
+    }
+
+    function verifyPasscode() {
+      const pin = document.getElementById('admin-pin-input').value;
+      if (pin === '1234' || pin === '8074') {
+        isAdminUnlocked = true;
+        closePasscodeModal();
+        toggleAdminView();
+      } else {
+        alert("Incorrect Admin Passcode. Default is 1234.");
+      }
+    }
+
+    function closePasscodeModal() {
+      document.getElementById('passcode-modal').classList.add('hidden');
+      document.getElementById('admin-pin-input').value = '';
+    }
+
+    function renderAdminDashboard() {
+      renderAdminTable();
+      renderAdminOrders();
+      updateAdminMetrics();
+    }
+
+    function updateAdminMetrics() {
+      document.getElementById('metric-total-products').textContent = products.length;
+      const lowStockCount = products.filter(p => p.stockBags <= 10).length;
+      document.getElementById('metric-low-stock').textContent = lowStockCount;
+      document.getElementById('metric-orders-count').textContent = orders.length;
+    }
+
+    function renderAdminTable(filterQuery = '') {
+      const tbody = document.getElementById('admin-table-body');
+      const q = filterQuery.toLowerCase();
+
+      const filtered = products.filter(p => 
+        !q || p.name.toLowerCase().includes(q) || p.origin.toLowerCase().includes(q)
+      );
+
+      tbody.innerHTML = filtered.map(prod => {
+        const bulkPrice = prod.prices.bulk || prod.prices['25kg'];
+        const bulkStr = prod.bulkSize || "26kg";
+
+        return `
+        <tr class="hover:bg-stone-50 transition">
+          <td class="py-3 px-4">
+            <div class="flex items-center gap-3">
+              <img src="${prod.image}" class="w-10 h-10 rounded-lg object-cover border border-stone-200">
+              <div>
+                <strong class="font-bold text-stone-900 block">${prod.name}</strong>
+                <span class="text-[11px] text-stone-500">${prod.origin}</span>
+              </div>
+            </div>
+          </td>
+          <td class="py-3 px-4">
+            <span class="bg-stone-100 text-stone-700 px-2 py-0.5 rounded text-[11px] font-semibold border border-stone-200 uppercase">
+              ${prod.category}
+            </span>
+          </td>
+          <td class="py-3 px-4 font-bold text-brand-700">
+            <div class="flex items-center gap-2">
+              <div>
+                <span>₹${bulkPrice}</span>
+                <span class="text-[10px] text-stone-400 block font-normal">(${bulkStr})</span>
+              </div>
+              <div class="flex flex-col gap-0.5">
+                <button onclick="quickAdjustPrice('${prod.id}', 50)" class="text-[10px] bg-stone-100 hover:bg-stone-200 px-1 rounded font-bold">+₹50</button>
+                <button onclick="quickAdjustPrice('${prod.id}', -50)" class="text-[10px] bg-stone-100 hover:bg-stone-200 px-1 rounded font-bold">-₹50</button>
+              </div>
+            </div>
+          </td>
+          <td class="py-3 px-4 text-xs text-stone-600">
+            10kg: <strong>₹${prod.prices['10kg']}</strong> | 1kg: <strong>₹${prod.prices['1kg']}</strong>
+          </td>
+          <td class="py-3 px-4">
+            <div class="flex items-center gap-1.5">
+              <button onclick="adjustStock('${prod.id}', -1)" class="w-5 h-5 bg-stone-200 rounded font-bold text-xs">-</button>
+              <span class="font-bold text-stone-900 ${prod.stockBags <= 10 ? 'text-red-600' : ''}">${prod.stockBags} Bags</span>
+              <button onclick="adjustStock('${prod.id}', 1)" class="w-5 h-5 bg-stone-200 rounded font-bold text-xs">+</button>
+            </div>
+          </td>
+          <td class="py-3 px-4">
+            <button onclick="toggleProductStock('${prod.id}')" class="px-2.5 py-1 rounded-full text-[11px] font-bold ${prod.inStock ? 'bg-emerald-100 text-emerald-800' : 'bg-red-100 text-red-800'}">
+              ${prod.inStock ? 'In Stock' : 'Out of Stock'}
+            </button>
+          </td>
+          <td class="py-3 px-4 text-right">
+            <div class="flex items-center justify-end gap-2">
+              <button onclick="openProductModal('${prod.id}')" class="text-brand-600 hover:text-brand-800 font-semibold text-xs p-1">
+                <i data-lucide="edit-3" class="w-4 h-4"></i>
+              </button>
+              <button onclick="deleteProduct('${prod.id}')" class="text-red-500 hover:text-red-700 font-semibold text-xs p-1">
+                <i data-lucide="trash-2" class="w-4 h-4"></i>
+              </button>
+            </div>
+          </td>
+        </tr>
+      `}).join('');
+
+      lucide.createIcons();
+    }
+
+    function renderAdminOrders() {
+      const tbody = document.getElementById('admin-orders-table-body');
+      if (orders.length === 0) {
+        tbody.innerHTML = `<tr><td colspan="7" class="text-center py-6 text-stone-400">No orders logged yet.</td></tr>`;
+        return;
+      }
+
+      tbody.innerHTML = orders.map(ord => `
+        <tr class="hover:bg-stone-50 transition">
+          <td class="py-3 px-4 font-mono font-bold text-stone-800">
+            ${ord.id}
+            <span class="block text-[10px] text-stone-400 font-normal">${ord.date}</span>
+          </td>
+          <td class="py-3 px-4 font-medium text-stone-900">
+            ${ord.name}
+            <span class="block text-xs text-stone-500">${ord.phone}</span>
+          </td>
+          <td class="py-3 px-4 text-stone-600 text-xs">
+            <div>${ord.locality}</div>
+            <span class="text-[10px] text-brand-700 font-bold">${ord.slot || 'Standard'} • ${ord.lift || 'Ground'}</span>
+          </td>
+          <td class="py-3 px-4 text-xs text-stone-600">
+            ${ord.items.map(i => `${i.name} (${i.pack}) x${i.qty}`).join(', ')}
+          </td>
+          <td class="py-3 px-4 font-black text-brand-700">₹${ord.total.toLocaleString()}</td>
+          <td class="py-3 px-4">
+            <select onchange="updateOrderStatus('${ord.id}', this.value)" class="text-xs bg-stone-100 border border-stone-200 rounded px-2 py-1 font-semibold">
+              <option value="Pending" ${ord.status === 'Pending' ? 'selected' : ''}>Pending</option>
+              <option value="Confirmed" ${ord.status === 'Confirmed' ? 'selected' : ''}>Confirmed</option>
+              <option value="Dispatched" ${ord.status === 'Dispatched' ? 'selected' : ''}>Dispatched</option>
+              <option value="Delivered" ${ord.status === 'Delivered' ? 'selected' : ''}>Delivered</option>
+            </select>
+          </td>
+          <td class="py-3 px-4 text-right">
+            <button onclick="openInvoiceModal('${ord.id}')" class="bg-stone-100 hover:bg-stone-200 text-stone-800 px-2.5 py-1 rounded text-xs font-bold transition flex items-center gap-1 ml-auto">
+              <i data-lucide="file-text" class="w-3.5 h-3.5"></i> Bill & QR
+            </button>
+          </td>
+        </tr>
+      `).join('');
+
+      lucide.createIcons();
+    }
+
+    function quickAdjustPrice(prodId, delta) {
+      const p = products.find(i => i.id === prodId);
+      if (!p) return;
+      if (p.prices.bulk) p.prices.bulk = Math.max(100, p.prices.bulk + delta);
+      else p.prices['25kg'] = Math.max(100, p.prices['25kg'] + delta);
+      saveProducts();
+    }
+
+    function adjustStock(prodId, delta) {
+      const p = products.find(i => i.id === prodId);
+      if (!p) return;
+      p.stockBags = Math.max(0, p.stockBags + delta);
+      saveProducts();
+    }
+
+    function toggleProductStock(prodId) {
+      const p = products.find(i => i.id === prodId);
+      if (!p) return;
+      p.inStock = !p.inStock;
+      saveProducts();
+    }
+
+    function deleteProduct(prodId) {
+      if (!confirm("Are you sure you want to remove this variety?")) return;
+      products = products.filter(p => p.id !== prodId);
+      saveProducts();
+    }
+
+    function updateOrderStatus(ordId, newStatus) {
+      const order = orders.find(o => o.id === ordId);
+      if (!order) return;
+      order.status = newStatus;
+      saveOrders();
+    }
+
+    function openProductModal(prodId = null) {
+      const modal = document.getElementById('product-modal');
+      const form = document.getElementById('product-form');
+      const title = document.getElementById('product-modal-title');
+      
+      form.reset();
+
+      if (prodId) {
+        const prod = products.find(p => p.id === prodId);
+        if (!prod) return;
+        title.textContent = "Edit Grain Variety";
+        document.getElementById('form-product-id').value = prod.id;
+        document.getElementById('form-product-name').value = prod.name;
+        document.getElementById('form-product-cat').value = prod.category;
+        document.getElementById('form-product-badge').value = prod.badge || '';
+        document.getElementById('form-product-origin').value = prod.origin || '';
+        document.getElementById('form-product-stock').value = prod.stockBags || 0;
+        document.getElementById('form-bulk-size').value = prod.bulkSize || '26kg';
+        document.getElementById('form-price-bulk').value = prod.prices.bulk || prod.prices['25kg'] || '';
+        document.getElementById('form-price-10kg').value = prod.prices['10kg'] || '';
+        document.getElementById('form-price-5kg').value = prod.prices['5kg'] || '';
+        document.getElementById('form-price-1kg').value = prod.prices['1kg'] || '';
+        document.getElementById('form-product-image').value = prod.image || '';
+        document.getElementById('form-product-desc').value = prod.desc || '';
+      } else {
+        title.textContent = "Add New Grain Variety";
+        document.getElementById('form-product-id').value = '';
+        document.getElementById('form-bulk-size').value = '26kg'; // Default
+        document.getElementById('form-product-image').value = "https://images.unsplash.com/photo-1586201375761-83865001e31c?auto=format&fit=crop&w=600&q=80";
+      }
+
+      modal.classList.remove('hidden');
+    }
+
+    function closeProductModal() {
+      document.getElementById('product-modal').classList.add('hidden');
+    }
+
+    function handleProductSubmit(e) {
+      e.preventDefault();
+      const id = document.getElementById('form-product-id').value || ("prod-" + Date.now());
+      const name = document.getElementById('form-product-name').value;
+      const category = document.getElementById('form-product-cat').value;
+      const badge = document.getElementById('form-product-badge').value;
+      const origin = document.getElementById('form-product-origin').value;
+      const stockBags = parseInt(document.getElementById('form-product-stock').value) || 0;
+      const bulkSize = document.getElementById('form-bulk-size').value; // Fetch selected bulk size
+      const pBulk = parseFloat(document.getElementById('form-price-bulk').value) || 0;
+      const p10 = parseFloat(document.getElementById('form-price-10kg').value) || 0;
+      const p5 = parseFloat(document.getElementById('form-price-5kg').value) || 0;
+      const p1 = parseFloat(document.getElementById('form-price-1kg').value) || 0;
+      const image = document.getElementById('form-product-image').value;
+      const desc = document.getElementById('form-product-desc').value;
+
+      const newProd = {
+        id,
+        name,
+        category,
+        badge,
+        origin,
+        stockBags,
+        bulkSize, // Save dynamic size
+        inStock: stockBags > 0,
+        desc,
+        image,
+        prices: {
+          bulk: pBulk,
+          "10kg": p10,
+          "5kg": p5,
+          "1kg": p1
+        }
+      };
+
+      const existingIdx = products.findIndex(p => p.id === id);
+      if (existingIdx >= 0) {
+        products[existingIdx] = newProd;
+      } else {
+        products.push(newProd);
+      }
+
+      saveProducts();
+      closeProductModal();
+    }
+
+    function openInvoiceModal(orderId) {
+      const order = orders.find(o => o.id === orderId);
+      if (!order) return;
+
+      const container = document.getElementById('printable-invoice-content');
+      const gstRate = 0.05;
+      const subtotal = order.total;
+      const gstAmt = Math.round(subtotal * gstRate);
+      const grandTotal = subtotal;
+
+      const upiUrl = `upi://pay?pa=${encodeURIComponent(UPI_ID)}&pn=${encodeURIComponent(BRAND_NAME)}&am=${grandTotal}&cu=INR&tn=${encodeURIComponent('Grainhub ' + order.id)}`;
+      const qrApiUrl = `https://api.qrserver.com/v1/create-qr-code/?size=180x180&data=${encodeURIComponent(upiUrl)}`;
+
+      container.innerHTML = `
+        <div class="border border-stone-300 p-6 rounded-xl space-y-6">
+          <div class="flex justify-between items-start border-b border-stone-200 pb-4">
+            <div>
+              <h2 class="text-2xl font-serif font-black text-stone-900 leading-tight">GRAINHUB</h2>
+              <p class="text-xs text-stone-600 mt-0.5">Operated by Sri Lakshmi Rice Store</p>
+              <p class="text-xs text-stone-500">Rajamohallah, King Koti, Koti, Hyderabad - 500001</p>
+              <p class="text-xs text-stone-500">Tel: 092462 92724 | WhatsApp: +91 80745 72067</p>
+              <p class="text-[11px] font-semibold text-stone-700 mt-1">GSTIN: 36ABCDE1234F1Z5 • FSSAI: 23621028000312</p>
+            </div>
+            <div class="text-right">
+              <span class="inline-block bg-brand-100 text-brand-900 font-black text-xs px-2.5 py-1 rounded border border-brand-300 uppercase">
+                TAX INVOICE / CASH BILL
+              </span>
+              <p class="text-xs font-bold text-stone-800 mt-2">Bill No: ${order.id}</p>
+              <p class="text-xs text-stone-500">Date: ${order.date}</p>
+            </div>
+          </div>
+
+          <div class="bg-stone-50 p-3 rounded-lg border border-stone-200 text-xs">
+            <h4 class="font-bold text-stone-800 uppercase tracking-wider text-[10px] mb-1">Customer / Consignee:</h4>
+            <div class="grid grid-cols-2 gap-2 text-stone-700">
+              <div><strong>Name:</strong> ${order.name}</div>
+              <div><strong>Phone:</strong> ${order.phone}</div>
+              <div class="col-span-2"><strong>Delivery Locality:</strong> ${order.locality}</div>
+              ${order.slot ? `<div class="col-span-2 text-brand-700 font-semibold"><strong>Slot:</strong> ${order.slot} (${order.lift || 'Standard'})</div>` : ''}
+            </div>
+          </div>
+
+          <table class="w-full text-left text-xs border border-stone-200 divide-y divide-stone-200">
+            <thead class="bg-stone-100 text-stone-800 font-bold uppercase text-[10px]">
+              <tr>
+                <th class="p-2.5">S.No</th>
+                <th class="p-2.5">Item Description</th>
+                <th class="p-2.5">Pack Size</th>
+                <th class="p-2.5 text-center">Qty</th>
+                <th class="p-2.5 text-right">Rate (₹)</th>
+                <th class="p-2.5 text-right">Amount (₹)</th>
+              </tr>
+            </thead>
+            <tbody class="divide-y divide-stone-200">
+              ${order.items.map((item, idx) => `
+                <tr>
+                  <td class="p-2.5 text-stone-500">${idx + 1}</td>
+                  <td class="p-2.5 font-bold text-stone-800">${item.name}</td>
+                  <td class="p-2.5 text-stone-600">${item.pack}</td>
+                  <td class="p-2.5 text-center font-bold">${item.qty}</td>
+                  <td class="p-2.5 text-right">₹${item.price}</td>
+                  <td class="p-2.5 text-right font-bold">₹${(item.price * item.qty).toLocaleString()}</td>
+                </tr>
+              `).join('')}
+            </tbody>
+          </table>
+
+          <div class="grid grid-cols-1 sm:grid-cols-12 gap-4 pt-2 border-t border-stone-200 items-center">
+            <div class="sm:col-span-6 bg-amber-50/70 p-3 rounded-xl border border-amber-200 flex items-center gap-3.5">
+              <div class="bg-white p-1.5 rounded-lg border border-amber-300 shadow-sm shrink-0">
+                <img src="${qrApiUrl}" alt="Scan to Pay via UPI" class="w-24 h-24 object-contain">
+              </div>
+              <div class="text-[11px] space-y-1">
+                <span class="inline-block bg-amber-200/60 text-amber-900 text-[10px] font-bold px-1.5 py-0.5 rounded">Scan & Pay ₹${grandTotal.toLocaleString()}</span>
+                <p class="font-bold text-stone-900">GPay / PhonePe / Paytm / BHIM</p>
+                <p class="font-mono text-xs font-bold text-brand-800 bg-white px-2 py-0.5 rounded border border-amber-200">${UPI_ID}</p>
+                <p class="text-[10px] text-stone-500 leading-tight">Fast delivery dispatch upon confirmation.</p>
+              </div>
+            </div>
+
+            <div class="sm:col-span-6 space-y-1.5 text-xs text-right">
+              <div class="flex justify-between">
+                <span>Sub Total:</span>
+                <span class="font-bold">₹${subtotal.toLocaleString()}</span>
+              </div>
+              <div class="flex justify-between text-stone-500 text-[11px]">
+                <span>GST Included:</span>
+                <span>₹${gstAmt.toLocaleString()}</span>
+              </div>
+              <div class="flex justify-between text-base font-black text-brand-900 border-t border-stone-300 pt-1.5">
+                <span>Total Payable:</span>
+                <span>₹${grandTotal.toLocaleString()}</span>
+              </div>
+            </div>
+          </div>
+
+          <div class="flex justify-between items-end pt-4 border-t border-stone-200 text-xs text-stone-400">
+            <div>Customer Signature</div>
+            <div class="text-right">
+              <strong class="text-stone-800 block text-xs">For Grainhub</strong>
+              <span class="text-[10px] mt-4 block">Authorized Signatory</span>
+            </div>
+          </div>
+
+        </div>
+      `;
+
+      document.getElementById('invoice-modal').classList.remove('hidden');
+    }
+
+    function closeInvoiceModal() {
+      document.getElementById('invoice-modal').classList.add('hidden');
+    }
+  </script>
+</body>
+</html>
