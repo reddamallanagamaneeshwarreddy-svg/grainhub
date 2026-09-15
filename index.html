@@ -1418,6 +1418,15 @@
         msg += `\n*Payment via UPI:* ${UPI_ID}`;
         msg += `\nFulfilled by Sri Lakshmi Rice Store, King Koti, Hyd.`;
 
+        // Ensure these IDs match your actual HTML input fields
+const nameInput = document.getElementById('customer-name').value;
+const phoneInput = document.getElementById('customer-phone').value;
+
+// Ensure this matches your cart's total amount variable (e.g., cartTotal, grandTotal)
+const totalAmount = grandTotal; 
+
+// Send data to the database
+window.processFirebaseOrder(nameInput, phoneInput, totalAmount);
         const waUrl = `https://wa.me/91${WA_NUMBER}?text=${encodeURIComponent(msg)}`;
         window.open(waUrl, '_blank');
       }
@@ -1825,9 +1834,72 @@
       document.getElementById('invoice-modal').classList.remove('hidden');
     }
 
-    function closeInvoiceModal() {
-      document.getElementById('invoice-modal').classList.add('hidden');
+   function closeInvoiceModal() {
+    document.getElementById('invoice-modal').classList.add('hidden');
+}
+</script>
+
+<!-- YOUR NEW FIREBASE SCRIPT GOES RIGHT HERE -->
+<script type="module">
+  import { initializeApp } from "https://www.gstatic.com/firebasejs/12.19.0/firebase-app.js";
+  import { getFirestore, collection, addDoc, getDocs, query, where } from "https://www.gstatic.com/firebasejs/12.19.0/firebase-firestore.js";
+
+  const firebaseConfig = {
+    apiKey: "AIzaSyBolGk84X3WOmmoa_7v5KERJz-qQKcAyvw",
+    authDomain: "grainhub-backend.firebaseapp.com",
+    projectId: "grainhub-backend",
+    storageBucket: "grainhub-backend.firebasestorage.app",
+    messagingSenderId: "855055200126",
+    appId: "1:855055200126:web:6d7a14e97eafd8da35cd2f"
+  };
+
+  // Initialize Firebase
+  const app = initializeApp(firebaseConfig);
+  const db = getFirestore(app);
+
+  // Make database commands globally available to your other JS functions
+  window.db = db;
+  window.collection = collection;
+  window.addDoc = addDoc;
+  window.getDocs = getDocs;
+  window.query = query;
+  window.where = where;
+  window.processFirebaseOrder = async function(customerName, customerPhone, orderTotal) {
+  try {
+    const customersRef = window.collection(window.db, "customers");
+    
+    // Check if this phone number already exists
+    const q = window.query(customersRef, window.where("phone", "==", customerPhone));
+    const querySnapshot = await window.getDocs(q);
+
+    if (!querySnapshot.empty) {
+      // Customer exists: Grab their ID
+      const existingCustomer = querySnapshot.docs[0];
+      await saveOrderDetails(existingCustomer.id, orderTotal);
+    } else {
+      // New customer: Create a profile
+      const newCustomer = await window.addDoc(customersRef, {
+        name: customerName,
+        phone: customerPhone,
+        firstVisit: new Date().toISOString()
+      });
+      await saveOrderDetails(newCustomer.id, orderTotal);
     }
-  </script>
+  } catch (error) {
+    console.error("Database connection error: ", error);
+  }
+};
+
+async function saveOrderDetails(customerId, total) {
+  const ordersRef = window.collection(window.db, "orders");
+  await window.addDoc(ordersRef, {
+    customerId: customerId,
+    amount: total,
+    date: new Date().toISOString(),
+    status: "Pending"
+  });
+}
+</script>
+
 </body>
 </html>
